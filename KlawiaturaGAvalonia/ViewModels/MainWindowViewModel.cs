@@ -7,9 +7,14 @@ public class MainWindowViewModel : ViewModelBase
     public string SecKeyColour { get; set; } = "LightGray";
     public string BorderColour { get; set; } = "Black";
     
-    //UI element contents
-    public string KLabel { get; set; } = "Klawiatura";
+    //Virtual keyboard layout visualisation contents
     public int KbFontSize { get; set; } = 20;
-    public string PButton { get; set; } = "Punktacja";
     
+    //Evaluation section contents
+    public int EvalFontSize { get; set; } = 20;
+    
+    //Settings contents
+    
+    //Results contents
+
 }

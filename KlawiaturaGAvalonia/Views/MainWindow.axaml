@@ -28,7 +28,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Foreground="{Binding BorderColour}" Text="{Binding KLabel}" Height="16" Width="55"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Foreground="{Binding BorderColour}" Text="Klawiatura"/>
 
         <!-- Rectangle around the outside of the field containing the virtual keyboard-->
         <Rectangle Margin="1,1,1,1"  StrokeThickness="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Stroke="{Binding BorderColour}" />
@@ -62,7 +62,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ShowCostButton" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" ClickMode="Release" Content="{Binding PButton}" />
+            <Button x:Name="ShowCostButton" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" ClickMode="Release">Punktacja</Button>
 
             <!-- 0-th Row of the virtual keyboard -->
             <!-- Adding rectangles as keys -->
@@ -250,6 +250,47 @@
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="CTRL"/>
             </Border>
         </Grid>
+        
+        <!-- Rectangle surrounding the field with the evaluation of the selected keyboard layout -->
+        <Border Grid.Row="2" Grid.Column="0" Margin="1,1,1,1" BorderBrush="{Binding BorderColour}" BorderThickness="1"/>
 
+        <!-- Grid containing the evaluation of the currently displayed keyboard (default is qwerty, btw) -->
+        <Grid Grid.Row="2" Grid.Column="0" Margin="1,1,1,1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Text="Statystyki Klawiatury" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="ID Klawiatury:" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <Label x:Name="SelectedLayoutId" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Content="QWERTY" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <ComboBox x:Name="LayoutSelection" Margin="2,2,2,2" SelectedItem="QWERTY" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Koszt:" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+                <TextBlock x:Name="LayoutFitness" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Klaw./QWERTY:" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="4" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <TextBlock x:Name="LayoutVsQwerty" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
