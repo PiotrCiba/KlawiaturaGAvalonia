@@ -327,7 +327,7 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ustawienia Populacji" FontSize="15"/>
+                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="Ustawienia Populacji" FontSize="15"/>
             </Border>
             
             <Grid Grid.Row="1" Grid.Column="0" Margin="2,2,2,2">
