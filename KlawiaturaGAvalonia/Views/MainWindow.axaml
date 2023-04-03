@@ -15,6 +15,20 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+    
+    <Window.Styles>
+        <Style Selector="Border.key">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="1,1,1,1"/>
+        </Style>
+        <Style Selector="Border.bb">
+            <Setter Property="BorderBrush" Value="{Binding BorderColour}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Margin" Value="1.5,1.5,1.5,1.5"/>
+        </Style>
+    </Window.Styles>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -66,193 +80,194 @@
 
             <!-- 0-th Row of the virtual keyboard -->
             <!-- Adding rectangles as keys -->
-            <Border Grid.Row="0" Grid.Column="1" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}" BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="0" Grid.Column="1" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="1" />
             </Border>
-            <Border Grid.Row="0" Grid.Column="2" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="2" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="2" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="3" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="3" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="3" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="4" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="4" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="4" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="5" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="5" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}" >
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="5" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="6" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="6" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="6" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="7" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="7" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="7" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="8" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="8" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="8" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="9" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="9" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="9" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="10" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="10" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="0" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="11" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="11" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="-" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="12" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="12" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="=" /> 
             </Border>
-            <Border Grid.Row="0" Grid.Column="13" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1" >
+            <Border Grid.Row="0" Grid.Column="13" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="&lt;-" /> 
             </Border>
             
             <!-- First Row of the virtual keyboard -->
             <!-- Adding rectangles as keys -->
-            <Border Grid.Row="1" Grid.Column="0" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="TAB" />
+            <Border Grid.Row="1" Grid.Column="0" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="TAB" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="1" Background="{Binding  PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyQ" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="Q" />
+            <Border Grid.Row="1" Grid.Column="1" Classes="key" Background="{Binding  PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][0]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="2" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyW" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="W" />
+            <Border Grid.Row="1" Grid.Column="2" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][1]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="3" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyE" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="E" />
+            <Border Grid.Row="1" Grid.Column="3" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][2]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="4" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyR" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="R" />
+            <Border Grid.Row="1" Grid.Column="4" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][3]}" />
+            </Border> 
+            <Border Grid.Row="1" Grid.Column="5" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][4]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="5" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyT" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="T" />
+            <Border Grid.Row="1" Grid.Column="6" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][5]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="6" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyY" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="Y" />
+            <Border Grid.Row="1" Grid.Column="7" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][6]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="7" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyU" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="U" />
+            <Border Grid.Row="1" Grid.Column="8" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][7]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="8" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyI" Grid.Row="1" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="I" />
+            <Border Grid.Row="1" Grid.Column="9" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][8]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="9" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyO" Grid.Row="1" Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="O" />
+            <Border Grid.Row="1" Grid.Column="10" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][9]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="10" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="KeyP" Grid.Row="1" Grid.Column="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="P" />
+            <Border Grid.Row="1" Grid.Column="11" Classes="key" Background="{Binding PointKey[5]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][10]}" />
             </Border>
-            <Border Grid.Row="1" Grid.Column="11" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="Key10" Grid.Row="1" Grid.Column="11" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="[" />
-            </Border>
-            <Border Grid.Row="1" Grid.Column="12" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-                <Label x:Name="Key11" Grid.Row="1" Grid.Column="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="]" />
+            <Border Grid.Row="1" Grid.Column="12" Classes="key" Background="{Binding PointKey[5]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[0][11]}" />
             </Border>
             
             <!-- Second Row of the virtual keyboard -->
-            <Border Grid.Row="2" Grid.Column="0" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="CAPS LOCK"/></Border>
-            <Border Grid.Row="2" Grid.Column="1" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyA" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="A"/>
+            <Border Grid.Row="2" Grid.Column="0" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="CAPS LOCK"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="2" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyS" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="S"/>
+            <Border Grid.Row="2" Grid.Column="1" Classes="key" Background="{Binding PointKey[1]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][0]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="3" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyD" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="D"/>
+            <Border Grid.Row="2" Grid.Column="2" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][1]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="4" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyF" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="F"/>
+            <Border Grid.Row="2" Grid.Column="3" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][2]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="5" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyG" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="G"/>
+            <Border Grid.Row="2" Grid.Column="4" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][3]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="6" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyH" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="H"/>
+            <Border Grid.Row="2" Grid.Column="5" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][4]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="7" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyJ" Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="J"/>
+            <Border Grid.Row="2" Grid.Column="6" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][5]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="8" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyK" Grid.Row="2" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="K"/>
+            <Border Grid.Row="2" Grid.Column="7" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][6]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="9" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyL" Grid.Row="2" Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="L"/>
+            <Border Grid.Row="2" Grid.Column="8" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][7]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="10" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="Key20" Grid.Row="2" Grid.Column="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content=";" />
+            <Border Grid.Row="2" Grid.Column="9" Classes="key" Background="{Binding PointKey[0]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][8]}"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="11" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="Key21" Grid.Row="2" Grid.Column="11" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="'"/>
+            <Border Grid.Row="2" Grid.Column="10" Classes="key" Background="{Binding PointKey[1]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][9]}" />
             </Border>
-            <Border Grid.Row="2" Grid.Column="12" Grid.ColumnSpan="2" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label Grid.Row="2" Grid.Column="12" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" FontSize="16" Content="ENTER" />
+            <Border Grid.Row="2" Grid.Column="11" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[1][10]}"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="12" Classes="key" Grid.ColumnSpan="2" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Content="ENTER" />
             </Border>
             
             <!-- Third row -->
-            <Border Grid.Row="3" Grid.Column="0" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="SHIFT" />
+            <Border Grid.Row="3" Grid.Column="0" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="SHIFT" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="1" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyZ" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="Z" />
+            <Border Grid.Row="3" Grid.Column="1" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][0]}" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="2" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyX" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="X" />
+            <Border Grid.Row="3" Grid.Column="2" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][1]}" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="3" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyC" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="C" />
+            <Border Grid.Row="3" Grid.Column="3" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][2]}" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="4" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyV" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="V" />
+            <Border Grid.Row="3" Grid.Column="4" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][3]}" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="5" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyB" Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="B" />
+            <Border Grid.Row="3" Grid.Column="5" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][4]}" />
             </Border>
-            <Border Grid.Row="3" Grid.Column="6" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyN" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="N"/>
+            <Border Grid.Row="3" Grid.Column="6" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][5]}"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="7" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="KeyM" Grid.Row="3" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="M"/>
+            <Border Grid.Row="3" Grid.Column="7" Classes="key" Background="{Binding PointKey[2]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][6]}"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="8" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="Key30" Grid.Row="3" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content=","/>
+            <Border Grid.Row="3" Grid.Column="8" Classes="key" Background="{Binding PointKey[3]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][7]}"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="9" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="Key31" Grid.Row="3" Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="."/>
+            <Border Grid.Row="3" Grid.Column="9" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][8]}"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="10" Background="{Binding PrimKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label x:Name="Key32" Grid.Row="3" Grid.Column="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="?"/>
+            <Border Grid.Row="3" Grid.Column="10" Classes="key" Background="{Binding PointKey[4]}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="{Binding CurrentLayout[2][9]}"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="11" Grid.ColumnSpan="3" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label Grid.Row="3" Grid.Column="11" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="3" FontSize="{Binding KbFontSize}" Content="SHIFT" />
+            <Border Grid.Row="3" Grid.Column="11" Classes="key" Grid.ColumnSpan="3" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{Binding KbFontSize}" Content="SHIFT" />
             </Border>
             
             <!-- Bottom, decorative row -->
-            <Border Grid.Row="4" Grid.Column="0" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="0" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="CTRL"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="1" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="WIN"/>
+            <Border Grid.Row="4" Grid.Column="1" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
+            <Label HorizontalAlignment="Center" Classes="key" VerticalAlignment="Center" FontSize="20" Content="WIN"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="2" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="2" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="ALT"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="7" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1"/>
-            <Border Grid.Row="4" Grid.Column="10" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="7" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"/>
+            <Border Grid.Row="4" Grid.Column="10" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="ALT"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="11" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="11" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="WIN"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="12" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="12" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Content="MENU"/>
             </Border>
-            <Border Grid.Row="4" Grid.Column="13" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}"  BorderThickness="1" CornerRadius="2" Margin="1,1,1,1">
+            <Border Grid.Row="4" Grid.Column="13" Classes="key" Background="{Binding SecKeyColour}" BorderBrush="{Binding BorderColour}">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="CTRL"/>
             </Border>
         </Grid>
         
-        <!-- Rectangle surrounding the field with the evaluation of the selected keyboard layout -->
-        <Border Grid.Row="2" Grid.Column="0" Margin="1,1,1,1" BorderBrush="{Binding BorderColour}" BorderThickness="1"/>
+        <!-- Border surrounding the field with the evaluation of the selected keyboard layout -->
+        <Border Grid.Row="2" Grid.Column="0" Classes="bb" Margin="1,1,1,1"/>
 
         <!-- Grid containing the evaluation of the currently displayed keyboard (default is qwerty, btw) -->
         <Grid Grid.Row="2" Grid.Column="0" Margin="1,1,1,1">
@@ -267,29 +282,160 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <Border Grid.Row="0" Grid.Column="0" Classes="bb">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Text="Statystyki Klawiatury" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="0" Grid.Column="1" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <Border Grid.Row="0" Grid.Column="1" Classes="bb">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="ID Klawiatury:" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="0" Grid.Column="2" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
-                <Label x:Name="SelectedLayoutId" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Content="QWERTY" FontSize="{Binding EvalFontSize}"/>
+            <Border Grid.Row="0" Grid.Column="2" Classes="bb">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Content="QWERTY" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="0" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
-                <ComboBox x:Name="LayoutSelection" Margin="2,2,2,2" SelectedItem="QWERTY" FontSize="{Binding EvalFontSize}"/>
+            <Border Grid.Row="1" Grid.Column="0" Classes="bb">
+                <ComboBox Margin="2,2,2,2" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="1" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <Border Grid.Row="1" Grid.Column="1" Classes="bb">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Koszt:" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="2" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
-                <TextBlock x:Name="LayoutFitness" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            <Border Grid.Row="1" Grid.Column="2" Classes="bb">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="3" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
+            <Border Grid.Row="1" Grid.Column="3" Classes="bb">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Klaw./QWERTY:" FontSize="{Binding EvalFontSize}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="4" BorderBrush="{Binding BorderColour}" Margin="2,2,2,2">
-            <TextBlock x:Name="LayoutVsQwerty" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            <Border Grid.Row="1" Grid.Column="4" Classes="bb">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            </Border>
+        </Grid>
+        
+        <!-- Border around the GA settings section -->
+        <Border Grid.Row="3" Grid.Column="0" Classes="bb"/>
+        
+        <Grid Grid.Row="3" Grid.Column="0" Margin="2,2,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="80*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ustawienia Populacji" FontSize="15"/>
+            </Border>
+            
+            <Grid Grid.Row="1" Grid.Column="0" Margin="2,2,2,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2.5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Liczebność:"/>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Ilość dzieci:"/>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Carry-over:"/>
+                <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="CO variable:"/>
+                <CheckBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" Content="Culling (bottom %):"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1" Margin="2,2,2,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2.5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Margin="1,2,1,2" Text="25" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="1" Margin="1,1,1,1"/>
+                <ComboBox Grid.Row="2" Margin="1,1,1,1"/>
+                <TextBox Grid.Row="3" Margin="1,2,1,2" Text="10"/>
+                <TextBox Grid.Row="4" Margin="1,2,1,2" Text="10"/>
+            </Grid>
+
+            <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ustawienia Rozrodu" FontSize="15"/>
+            </Border>
+            
+            <Grid Grid.Row="1" Grid.Column="2" Margin="2,2,2,6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Alg. wyboru:"/>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Alg. krzyżowania:"/>
+                <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="Rodzaj mutacji:"/>
+                <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="Sel. Pressure (1.0-2.0):"/>
+                <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="Szansa mutacji:"/>
+                <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="Rozległość:"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="3" Margin="2,2,2,6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <ComboBox x:Name="ChoiceAlgorithmCBox" Grid.Row="0" Margin="1,1,1,1"/>
+                <ComboBox x:Name="CrossoverAlgorithmCBox" Grid.Row="1" Margin="1,1,1,1"/>
+                <ComboBox x:Name="MutationTypeCBox" Grid.Row="2" Margin="1,1,1,1"/>
+                <TextBox x:Name="SelectionPressureBox" Grid.Row="3" Margin="1,1,45,1" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center" Text="1,5"/>
+                <TextBox x:Name="MutationChanceBox" Grid.Row="4" Margin="1,1,45,1" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center"  Text="0,01"/>
+                <TextBox x:Name="MutationSeverityBox" Grid.Row="5" Margin="1,1,45,1" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center"  Text="1"/>
+            </Grid>
+
+            <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Zachowanie" FontSize="15"/>
+            </Border>
+
+            <Grid Grid.Row="1" Grid.Column="4" Margin="1,1,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2.2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2.5*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"  Text="Zatrzymaj po:"/>
+                <RadioButton Grid.Row="1" x:Name="GenStopChoice" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="14" IsChecked="True" Content="pokoleniach"/>
+                <RadioButton Grid.Row="2" x:Name="EpsStopChoice" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="14" Content="poprawa &lt;"/>
+                <CheckBox Grid.Row="3" x:Name="IsFullMemory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="14" Content="Run FullMemory?" IsChecked="true"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="5" Margin="1,1,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2.2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3.4*"/>
+                    <RowDefinition Height="3.4*"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="GensToRunStopConditionBox" Grid.Row="1" Margin="1,1,1,1" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center" Text="25"/>
+                <TextBox x:Name="EpsValueStopConditionBox" Grid.Row="2" Margin="1,1,1,1" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center" Text="0,01"/>
+                <Button x:Name="SaveButton" Grid.Row="3" Margin="2,2,2,2" Content="Zapisz..."/>
+                <Button x:Name="StartButton" Grid.Row="4" Margin="2,2,2,2" Content="Start"/>
+            </Grid>
+
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Classes="bb">
+                <ProgressBar Margin="2,2,2,2" Minimum="0" Maximum="100" Value="0"/>
             </Border>
         </Grid>
     </Grid>
