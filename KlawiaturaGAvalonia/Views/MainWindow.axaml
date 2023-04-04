@@ -96,7 +96,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" ClickMode="Release" Content="Punktacja"/>
+            <Button Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" ClickMode="Press" Command="{Binding ShowCost}">Punktacja</Button>
 
             <!-- 0-th Row of the virtual keyboard -->
             <!-- Adding rectangles as keys -->
@@ -455,5 +455,25 @@
                 <ProgressBar Margin="2,2,2,2" Minimum="0" Maximum="100" Value="0"/>
             </Border>
         </Grid>
+        
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Pokolenia"/>
+        <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="1,4,5,1" Content="Graph >>>"/>
+        <DataGrid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="2" Margin="5,27,5,5" AutoGenerateColumns="False" IsReadOnly="True" Items="{Binding GenerationSummaries}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Gen" Binding="{Binding GenerationSummaries[0].IdPokolenia}"/>
+                <DataGridTextColumn Header="Best Fitness" Binding="{Binding GenerationSummaries[0].BestFitness}"/>
+                <DataGridTextColumn Header="Avg. Fitness" Binding="{Binding GenerationSummaries[0].AvgFitness}"/> 
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Chromosomy"/>
+        <DataGrid x:Name="ChromosomeDataGrid" Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" Items="{Binding AllGenerations[currSelGeneration]}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Layout" Binding="{Binding AllGenerations[currSelGeneration][0].layout}"/>
+                <DataGridTextColumn Header="Fitness" Binding="{Binding AllGenerations[currSelGeneration][0].fitness}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
