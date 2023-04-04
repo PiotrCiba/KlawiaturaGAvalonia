@@ -32,12 +32,16 @@ public class MainWindowViewModel : ViewModelBase
     public int EvalFontSize { get; set; } = 20;
 
     //Settings contents
-
+    public int SetFontSize { get; set; } = 12;
     public Settings Settings { get; set; } = new Settings();
     public string[] ChildNumbers { get; set; } = { "1", "2" };
     public string[] CarryModes { get; set; } = { "no carry", "Elityzm (%)" };
+    public string[] SelectionAlgorithms { get; set; } = { "Turniej", "Ruletka", "Rank" };
+    public string[] CrossoverAlgorithms { get; set; } = { "OX", "CX", "ERX", "AEX"};
+    public string[] MutationAlgorithms { get; set; } = { "Pair Swap", "Partial Scramble", "Inversion Mutation" };
 
     //Results contents
+    
 
     //Window UI methods
 
