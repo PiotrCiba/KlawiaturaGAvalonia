@@ -9,7 +9,7 @@ namespace KlawiaturaAG
     public class Settings
     {
         //population settings
-        public int popSize { get; set; } = 25;
+        public int popSize { get; set; } = 50;
         public int childNumber { get; set; } = 1;
         public int carryoverType { get; set; } = 0;
         public double carryVar { get; set; } = 10;

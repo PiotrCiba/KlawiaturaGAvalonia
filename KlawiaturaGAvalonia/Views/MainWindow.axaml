@@ -28,6 +28,11 @@
             <Setter Property="CornerRadius" Value="2"/>
             <Setter Property="Margin" Value="1.5,1.5,1.5,1.5"/>
         </Style>
+        <Style Selector="TextBox.settings">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Styles>
 
     <Grid>
@@ -45,10 +50,10 @@
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Foreground="{Binding BorderColour}" Text="Klawiatura"/>
 
         <!-- Rectangle around the outside of the field containing the virtual keyboard-->
-        <Rectangle Margin="1,1,1,1"  StrokeThickness="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Stroke="{Binding BorderColour}" />
+        <Border Classes="bb" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
 
         <!-- Rectangle represening the edge of the keyboard -->
-        <Rectangle Margin="17,27,22,17" StrokeThickness="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Stroke="{Binding BorderColour}"/> 
+        <Border Classes="bb" Margin="17,27,22,17" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/> 
                    
         <!-- Grid containing the keys of the keyboard -->
         <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="30,30,30,30">
@@ -292,19 +297,19 @@
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Content="QWERTY" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="0" Classes="bb">
-                <ComboBox Margin="2,2,2,2" FontSize="{Binding EvalFontSize}"/>
+                <ComboBox Margin="2,2,2,2" FontSize="{Binding EvalFontSize}" Items="{Binding Layouts}" SelectedIndex="{Binding SelectedLayout}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="1" Classes="bb">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Koszt:" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="2" Classes="bb">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Content="{Binding CurrentLayoutFitness}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="3" Classes="bb">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Klaw./QWERTY:" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="4" Classes="bb">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Content="{Binding CurrentImprovementOverQwerty}"/>
             </Border>
         </Grid>
         
@@ -330,37 +335,34 @@
                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="Ustawienia Populacji" FontSize="15"/>
             </Border>
             
-            <Grid Grid.Row="1" Grid.Column="0" Margin="2,2,2,2">
+            <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2.5*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Liczebność:"/>
-                <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Ilość dzieci:"/>
-                <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="Carry-over:"/>
-                <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Text="CO variable:"/>
-                <CheckBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" Content="Culling (bottom %):"/>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Liczebność:"/>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ilość dzieci:"/>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Carry-over:"/>
+                <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="CO variable:"/>
+                <CheckBox Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Content="Culling (bottom %):"/>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1" Margin="2,2,2,2">
+            <Grid Grid.Row="1" Grid.Column="1" Margin="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2.5*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Margin="1,2,1,2" Text="25" FontSize="14" Padding="0,0,0,0" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="1" Margin="1,1,1,1"/>
-                <ComboBox Grid.Row="2" Margin="1,1,1,1"/>
-                <TextBox Grid.Row="3" Margin="1,2,1,2" Text="10"/>
-                <TextBox Grid.Row="4" Margin="1,2,1,2" Text="10"/>
+                <TextBox Grid.Row="0" Classes="settings" Text="{Binding Settings.popSize}"/>
+                <ComboBox Grid.Row="1" Items="{Binding ChildNumbers}" SelectedIndex="{Binding Settings.childNumber}"/>
+                <ComboBox Grid.Row="2" Items="{Binding CarryModes}" SelectedIndex="{Binding Settings.carryoverType}"/>
+                <TextBox Grid.Row="3" Classes="settings" Text="{Binding Settings.carryVar}"/>
+                <TextBox Grid.Row="4" Classes="settings" Text="{Binding Settings.cullingRate}"/>
             </Grid>
 
             <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
