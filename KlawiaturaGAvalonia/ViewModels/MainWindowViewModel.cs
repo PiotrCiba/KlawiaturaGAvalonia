@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using KlawiaturaAG;
@@ -8,7 +7,7 @@ namespace KlawiaturaGAvalonia.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public new event PropertyChangedEventHandler? PropertyChanged;
 
     public void OnPropertyChanged([CallerMemberName] string? name = null)
     {
@@ -17,10 +16,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     //default constructor
     public MainWindowViewModel()
     {
-        
-        
+        ChangeLayoutSelection();
     }
-
     //Colour fields
     public string PrimaryColour { get; set; } = "White";
 
@@ -39,9 +36,20 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     };
 
     public string[] Layouts { get; set; } = { "QWERTY", "Dvorak", "ARENSITO", "Colemak", "Workman", "<Selected>" };
-    public int SelectedLayout { get; set; } = 0;
-    public double CurrentLayoutFitness { get; set; } = 0f;
-    public double CurrentImprovementOverQwerty { get; set; } = 0f;
+    private int _selectedlayout;
+    public int SelectedLayout
+    {
+        get { return _selectedlayout;}
+        set
+        {
+            _selectedlayout = value;
+            ChangeLayoutSelection();
+        }
+    }
+    public string SelectedLayoutName { get; set; } = "QWERTY";
+    public double CurrentLayoutFitness { get; set; }
+    public const double QwertyFitness = 243.5024299999992;
+    public double CurrentImprovementOverQwerty { get; set; }
     public int EvalFontSize { get; set; } = 20;
 
     //Settings contents
@@ -85,6 +93,65 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
         OnPropertyChanged(nameof(CurrentLayout));
         OnPropertyChanged(nameof(PointKey));
+    }
+
+    public void ChangeLayoutSelection()
+    {
+        if (showingCosts)
+            ShowCost();
+        
+        switch (SelectedLayout)
+        {
+            //Layout is saved in a string[] of {2, 12, 11, 10}
+            case 0: //QWERTY layout
+                CurrentLayout = new[]
+                {
+                    new[] { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]" },
+                    new[] { "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'" },
+                    new[] { "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?" }
+                };
+                break;
+            case 1: //Dvorak layout
+                CurrentLayout = new[]
+                {
+                    new[] { "'", ",", ".", "P", "Y", "F", "G", "C", "R", "L", "?", "=" },
+                    new[] { "A", "O", "E", "U", "I", "D", "H", "T", "N", "S", "-" },
+                    new[] { ";", "Q", "J", "K", "X", "B", "M", "W", "V", "Z" }
+                };
+                break;
+            case 2: //ARENSITO layout
+                CurrentLayout = new[]
+                {
+                    new[] { "Q", "L", ".", "P", "'", ";", "F", "U", "D", "K", "[", "]" },
+                    new[] { "A", "R", "E", "N", "B", "G", "S", "I", "T", "O", "-" },
+                    new[] { "Z", "W", ",", "H", "J", "V", "B", "Y", "M", "X" }
+                };
+                break;
+            case 3: //Colemak layout
+                CurrentLayout = new[]
+                {
+                    new[] { "Q", "W", "F", "P", "G", "J", "L", "U", "Y", ";", "[", "]" },
+                    new[] { "A", "R", "S", "T", "D", "H", "N", "E", "I", "O", "'" },
+                    new[] { "Z", "X", "C", "V", "B", "K", "M", ",", ".", "?" }
+                };
+                break;
+            case 4: //Workman layout
+                CurrentLayout = new[]
+                {
+                    new[] { "Q", "D", "R", "W", "B", "J", "F", "U", "P", ";", "[", "]" },
+                    new[] { "A", "S", "H", "T", "G", "Y", "N", "E", "O", "I", "'" },
+                    new[] { "Z", "X", "M", "C", "V", "K", "L", ",", ".", "?" }
+                };
+                break;
+        }
+
+        SelectedLayoutName = Layouts[SelectedLayout];
+        CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+        CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
+        OnPropertyChanged(nameof(CurrentLayout));
+        OnPropertyChanged(nameof(SelectedLayoutName));
+        OnPropertyChanged(nameof(CurrentLayoutFitness));
+        OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
     }
     //internal methods
 

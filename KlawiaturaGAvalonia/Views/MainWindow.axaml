@@ -309,22 +309,23 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="ID Klawiatury:" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="0" Grid.Column="2" Classes="bb">
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Content="QWERTY" FontSize="{Binding EvalFontSize}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Green" Text="{Binding SelectedLayoutName}" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="0" Classes="bb">
-                <ComboBox Margin="2,2,2,2" FontSize="{Binding EvalFontSize}" Items="{Binding Layouts}" SelectedIndex="{Binding SelectedLayout}"/>
+                <ComboBox Margin="2,2,2,2" FontSize="{Binding EvalFontSize}" Items="{Binding Layouts}" 
+                          SelectedIndex="{Binding SelectedLayout}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="1" Classes="bb">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Koszt:" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="2" Classes="bb">
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Content="{Binding CurrentLayoutFitness}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Text="{Binding CurrentLayoutFitness}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="3" Classes="bb">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Klaw./QWERTY:" FontSize="{Binding EvalFontSize}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Klaw./QWERTY:" FontSize="{Binding EvalFontSize}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="4" Classes="bb">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Content="{Binding CurrentImprovementOverQwerty}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="{Binding EvalFontSize}" Text="{Binding CurrentImprovementOverQwerty}"/>
             </Border>
         </Grid>
         
