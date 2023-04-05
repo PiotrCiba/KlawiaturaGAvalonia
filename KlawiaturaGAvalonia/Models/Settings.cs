@@ -21,8 +21,8 @@ namespace KlawiaturaAG
         public double SelPressure { get; set; } = 1.5;
         public int currX { get; set; } = 0;
         public int currMut { get; set; } = 0;
-        public double mutChance { get; set; } = 0.01;
-        public int mutSeverity { get; set; } = 1;
+        public double mutChance { get; set; } = 0.05;
+        public int mutSeverity { get; set; } = 5;
 
         //GA overall settings
         public bool fullMemory { get; set; } = true;

@@ -449,28 +449,28 @@
                 <TextBox Grid.Row="1" Classes="TB" Text="{Binding Settings.gensToRun}"/>
                 <TextBox Grid.Row="2" Classes="TB" Text="{Binding Settings.epsToStopAt}"/>
                 <Button Grid.Row="3" Margin="2" Content="Zapisz"/>
-                <Button Grid.Row="4" Margin="2" Content="Start"/>
+                <Button Grid.Row="4" Margin="2" Content="Start" Command="{Binding OnStartButtonClick}"/>
             </Grid>
 
             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Classes="bb">
-                <ProgressBar Margin="2,2,2,2" Minimum="0" Maximum="100" Value="0"/>
+                <ProgressBar VerticalAlignment="Stretch" Margin="2" Minimum="0" Maximum="100" Value="{Binding CurrentProgressValue}"/>
             </Border>
         </Grid>
         
         <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
         <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Pokolenia"/>
         <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="1,4,5,1" Content="Graph >>>"/>
-        <DataGrid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="2" Margin="5,27,5,5" AutoGenerateColumns="False" IsReadOnly="True" Items="{Binding GenerationSummaries}">
+        <DataGrid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="2" Margin="5,35,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Items="{Binding temp, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Gen" Binding="{Binding GenerationSummaries[0].IdPokolenia}"/>
-                <DataGridTextColumn Header="Best Fitness" Binding="{Binding GenerationSummaries[0].BestFitness}"/>
-                <DataGridTextColumn Header="Avg. Fitness" Binding="{Binding GenerationSummaries[0].AvgFitness}"/> 
+                <DataGridTextColumn Width="2*" Header="Gen" Binding="{Binding IdPokolenia}"/>
+                <DataGridTextColumn Width="3*" Header="Best Fit." Binding="{Binding BestFitness}"/>
+                <DataGridTextColumn Width="3*" Header="Avg. Fit." Binding="{Binding AvgFitness}"/>
             </DataGrid.Columns>
         </DataGrid>
-
+        
         <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Chromosomy"/>
-        <DataGrid x:Name="ChromosomeDataGrid" Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" Items="{Binding AllGenerations[currSelGeneration]}">
+        <DataGrid Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" Items="{Binding AllGenerations[currSelGeneration]}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Layout" Binding="{Binding AllGenerations[currSelGeneration][0].layout}"/>
                 <DataGridTextColumn Header="Fitness" Binding="{Binding AllGenerations[currSelGeneration][0].fitness}"/>

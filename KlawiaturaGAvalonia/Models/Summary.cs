@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,9 +10,9 @@ namespace KlawiaturaAG
 {
     public class Summary
     {
-        public int IdPokolenia { get; set; } = 0;
-        public double BestFitness { get; set; } = 0;
-        public double AvgFitness { get; set; } = 0;
+        public int IdPokolenia { get; set; }
+        public double BestFitness { get; set; }
+        public double AvgFitness { get; set; }
 
         public Summary(int idPokolenia, double bestFitness, double avgFitness)
         {

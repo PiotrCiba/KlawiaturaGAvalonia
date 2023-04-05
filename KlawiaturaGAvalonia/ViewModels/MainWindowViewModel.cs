@@ -1,6 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using DynamicData;
 using KlawiaturaAG;
 
 namespace KlawiaturaGAvalonia.ViewModels;
@@ -9,10 +15,24 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
     public new event PropertyChangedEventHandler? PropertyChanged;
 
+    //temp, to be deleted
+    private ObservableCollection<Summary> temp { get; set; } = new(smol());
+
+    private static IEnumerable<Summary> smol()
+    {
+        var output = new List<Summary>()
+        {
+            new (1, 1, 1),
+            new (2, 0, 1),
+            new (3, 3, 1),
+            new (4, 5, 1)
+        };
+        return output;
+    }
     public void OnPropertyChanged([CallerMemberName] string? name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-    }
+    } 
     //default constructor
     public MainWindowViewModel()
     {
@@ -50,7 +70,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public double CurrentLayoutFitness { get; set; }
     public const double QwertyFitness = 243.5024299999992;
     public double CurrentImprovementOverQwerty { get; set; }
-    public int EvalFontSize { get; set; } = 20;
+    public int EvalFontSize { get; set; } = 18;
 
     //Settings contents
     public int SetFontSize { get; set; } = 12;
@@ -62,19 +82,32 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public string[] MutationAlgorithms { get; set; } = { "Pair Swap", "Partial Scramble", "Inversion Mutation" };
 
     //Results contents
+    private Progress<int>? Progress { get; set; }
+    private int _currentProgressValue;
 
-    public List<Summary> GenerationSummaries { get; set; } = new List<Summary>();
-    public List<Chromosom[]> AllGenerations { get; set; } = new List<Chromosom[]>();
-    public int currSelGeneration { get; set; } = 0;
+    public int CurrentProgressValue
+    {
+        get { return _currentProgressValue;}
+        set
+        {
+            _currentProgressValue = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Summary> GenerationSummaries { get; set; } = new ObservableCollection<Summary>();
+    public ObservableCollection<Chromosom>[] AllGenerations { get; set; } = Array.Empty<ObservableCollection<Chromosom>>();
+    public ObservableCollection<Chromosom> CurrentGeneration { get; set; } = new ObservableCollection<Chromosom>();
+    public int CurrSelGeneration { get; set; }
 
     //Button commands
-    private bool showingCosts { get; set; }
+    private bool ShowingCosts { get; set; }
 
     public void ShowCost()
     {
-        if (showingCosts)
+        if (ShowingCosts)
         {
-            showingCosts = false;
+            ShowingCosts = false;
             CurrentLayout = new []{
                 new [] {"Q","W","E","R","T","Y","U","I","O","P","[","]"},
                 new [] {"A","S","D","F","G","H","J","K","L",";","'"}, 
@@ -83,7 +116,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             PointKey = new []{ "White", "White", "White", "White", "White", "LightGray" };
         }else
         {
-            showingCosts = true;
+            ShowingCosts = true;
             CurrentLayout = new []{
                 new [] {"4","2","2","3","4","4","3","2","2","4","5","5"},
                 new [] {"1.5","1","1","1","3","3","1","1","1","1.5","3"}, 
@@ -97,7 +130,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public void ChangeLayoutSelection()
     {
-        if (showingCosts)
+        if (ShowingCosts)
             ShowCost();
         
         switch (SelectedLayout)
@@ -152,6 +185,50 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         OnPropertyChanged(nameof(SelectedLayoutName));
         OnPropertyChanged(nameof(CurrentLayoutFitness));
         OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
+    }
+
+    public async void  OnStartButtonClick()
+    {
+        //Re-setting the progressbar
+
+        //setting up the progress updates
+        Progress = new Progress<int>( value => CurrentProgressValue = value );
+
+        //disabling GUI controls
+        //this.IsEnabled = false;
+
+        //calling GA asympotically, to get unpdates on the progressbar
+        (List<Summary>, List<Chromosom[]>) output = await StartTask();
+
+        //enabling GUI controls
+        //this.IsEnabled = true;
+
+        //sending Start returns to both DataGrids
+        GenerationSummaries = new ObservableCollection<Summary>(output.Item1);
+        AllGenerations = new ObservableCollection<Chromosom>[output.Item2.Count];
+        for (int i = 0; i < AllGenerations.Length; i++)
+        {
+            Chromosom[] tmp = output.Item2[i];
+            foreach (var c in tmp)
+            {
+                AllGenerations[i].Add(c);
+            }
+        }
+        CurrentGeneration = AllGenerations.Last();
+        
+        //GenerationsDataGrid.SelectedIndex = GenerationSummaries.Length-1;
+        //ChromosomeDataGrid.SelectedIndex = 0;
+        
+        CurrSelGeneration = AllGenerations.Length;
+        OnPropertyChanged(nameof(AllGenerations));
+        OnPropertyChanged(nameof(GenerationSummaries));
+        OnPropertyChanged(nameof(CurrSelGeneration));
+    }
+    
+    private async Task<(List<Summary>, List<Chromosom[]>)> StartTask()
+    {
+        //calling Start method to execute GA
+        return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress));
     }
     //internal methods
 
