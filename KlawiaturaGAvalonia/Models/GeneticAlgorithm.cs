@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
-namespace KlawiaturaAG
+namespace KlawiaturaGAvalonia.Models
 {
     public class GeneticAlgorithm
     {
@@ -33,33 +32,33 @@ namespace KlawiaturaAG
                 new double[] { 4, 4, 3, 2, 4, 4, 2, 3, 4, 4 }
         };
 
-        public static (List<Summary>, List<Chromosom[]>) Start(Settings s, IProgress<int> progress)
+        public static (List<Summary>, List<List<Chromosom>>) Start(Settings s, IProgress<int> progress)
         {
             //Czacza idzie tak: Rodzice > Fitness > CarryOver > Selekcja > Crossover > Mutacja > Dzieci > "Rodzice = Dzieci" > repeat
 
             //preparing the output variable;
-            List<Summary> GenSummaries = new List<Summary>();
-            List<Chromosom[]> Pokolenia = new List<Chromosom[]>();
+            List<Summary> genSummaries = new List<Summary>();
+            List<List<Chromosom>> pokolenia = new List<List<Chromosom>>();
 
             //Parent generation
-            Chromosom[] Parents = new Chromosom[s.popSize];
+            List<Chromosom> parents = new List<Chromosom>();
 
             //prepping Parents, random scramble
             for (int i = 0; i < s.popSize; i++)
-                Parents[i] = new Chromosom();
-            Parents = ScrambleParentsLayouts(Parents);
+                parents.Add(new Chromosom());
+            parents = ScrambleParentsLayouts(parents);
 
             //calculating the Parents' fitness
-            foreach (var p in Parents)
+            foreach (var p in parents)
             {
                 p.fitness = Fn(StringToLayout(p.layout));
             }
 
             //sorting Parents by fitness
-            Parents = Parents.OrderBy(p => p.fitness).ToArray();
+            parents = parents.OrderBy(p => p.fitness).ToList();
 
             //adding the 0-th generation to Pokolenia
-            Pokolenia.Add(Parents);
+            pokolenia.Add(parents);
 
             //do-while control variables breakcondition to exit, get to count generations (for generation number exit)
             bool breakCondition = false;
@@ -67,12 +66,10 @@ namespace KlawiaturaAG
             int gen = 0;
 
             //creating the first Summary for GenSummaries
-            var fitnesses = (from p in Parents orderby p.fitness select p.fitness);
-            double bestFit = fitnesses.First();
-            double avgFit = fitnesses.Average();
-            Summary currGenSummary = new Summary(gen, bestFit, avgFit);
+            var fitnesses = (from p in parents orderby p.fitness select p.fitness);
+            Summary currGenSummary = new Summary(gen, fitnesses.First(), fitnesses.Average());
 
-            GenSummaries.Add(currGenSummary);
+            genSummaries.Add(currGenSummary);
 
             //do-while for the GA's core
             do
@@ -83,7 +80,7 @@ namespace KlawiaturaAG
                 List<Chromosom> children = new List<Chromosom>();
 
                 //carryover-breedingPop from parents
-                (Chromosom[] carry, Chromosom[] breeders) carryAndPop = CarryModule.Select(Parents, s.carryoverType, s.carryVar, s.culling, s.cullingRate);
+                (Chromosom[] carry, Chromosom[] breeders) carryAndPop = CarryModule.Select(parents, s.carryoverType, s.carryVar, s.culling, s.cullingRate);
 
                 //copy carry to children
                 foreach (var c in carryAndPop.carry)
@@ -127,19 +124,17 @@ namespace KlawiaturaAG
                 }
 
                 //parents = children
-                Parents = children.OrderBy(o => o.fitness).ToArray();
+                parents = children.OrderBy(o => o.fitness).ToList();
 
                 //if fullmemory, add children to Pokolenia
                 if (s.fullMemory)
                 {
-                    Pokolenia.Add(Parents);
+                    pokolenia.Add(parents);
                 }
                 //summary prep, add to GenSummaries
-                fitnesses = (from p in Parents select p.fitness);
-                bestFit = fitnesses.First();
-                avgFit = fitnesses.Average();
-                currGenSummary = new Summary(gen, bestFit, avgFit);
-                GenSummaries.Add(currGenSummary);
+                fitnesses = (from p in parents select p.fitness);
+                currGenSummary = new Summary(gen, fitnesses.First(), fitnesses.Average());
+                genSummaries.Add(currGenSummary);
 
                 int report = 0;
 
@@ -157,7 +152,7 @@ namespace KlawiaturaAG
                 else
                 {
                     //stop at set improvement
-                    Summary[] temp = GenSummaries.TakeLast(2).ToArray();
+                    Summary[] temp = genSummaries.TakeLast(2).ToArray();
                     double currentEps = (temp[0].BestFitness - temp[1].BestFitness) / temp[1].BestFitness;
                     //calculate the report
                     report = (int)((s.epsToStopAt / currentEps) * 100);
@@ -183,7 +178,7 @@ namespace KlawiaturaAG
             } while (!breakCondition);
 
             //return the results of the algorithm
-            return (GenSummaries, Pokolenia);
+            return (genSummaries, pokolenia);
         }
 
         public static double Fn(string[][] input)
@@ -230,10 +225,10 @@ namespace KlawiaturaAG
                 output[i] = temp[i].Select(x => new string(x, 1)).ToArray();
             return output;
         }
-        public static Chromosom[] ScrambleParentsLayouts(Chromosom[] input)
+        public static List<Chromosom> ScrambleParentsLayouts(List<Chromosom> input)
         {
-            Chromosom[] output = input;
-            int len = input.Length;
+            List<Chromosom> output = input;
+            int len = input.Count;
 
             Random rand = new Random();
 

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KlawiaturaAG
+namespace KlawiaturaGAvalonia.Models
 {
     public static class ParentSelection
     {
-        public static Chromosom[] Select(Chromosom[] candidates, int mode, double SelectionPressure)
+        public static Chromosom[] Select(Chromosom[] candidates, int mode, double selectionPressure)
         {
-            int halflength = (int)(candidates.Length / 2);
-            Chromosom[] tophalf = (from c in candidates orderby c.fitness ascending select c).ToArray()[..halflength];
             switch (mode)
             {
                 case 0: //Turniej 
@@ -20,7 +15,7 @@ namespace KlawiaturaAG
                 case 1: //Ruletka 
                     return RoulletteSelectionAlgorithm(candidates);
                 case 2: //Rank Selection
-                    return RankSelectionAlgorithm(candidates, SelectionPressure);
+                    return RankSelectionAlgorithm(candidates, selectionPressure);
                 default:    //Turniej
                     return TournamentSelectionAlgorithm(candidates);
             }
@@ -74,31 +69,31 @@ namespace KlawiaturaAG
             }
 
             //preparing the list of indexes based on how big the probability is
-            List<int> IndexesToRoll = new List<int>();
+            List<int> indexesToRoll = new List<int>();
 
             for (int i = 0; i < len; i++)
             {
                 int numFieldsToAdd = (int)(probabilities[i] * 100);
                 for (int k = 0; k < numFieldsToAdd; k++)
                 {
-                    IndexesToRoll.Add(i);
+                    indexesToRoll.Add(i);
                 }
             }
 
             //shuffling the list of indexes using Fisher-Yates algorithm
             Random rng = new Random();
-            int n = IndexesToRoll.Count;
+            int n = indexesToRoll.Count;
             while (n > 1)
             {
                 n--;
                 int k = rng.Next(n + 1);
-                int value = IndexesToRoll[k];
-                IndexesToRoll[k] = IndexesToRoll[n];
-                IndexesToRoll[n] = value;
+                int value = indexesToRoll[k];
+                indexesToRoll[k] = indexesToRoll[n];
+                indexesToRoll[n] = value;
             }
 
             total = 0;
-            foreach (var i in IndexesToRoll)
+            foreach (var i in indexesToRoll)
             {
                 total += probabilities[i];
             }
@@ -111,12 +106,12 @@ namespace KlawiaturaAG
             {
                 spin = rng.NextDouble() * total;
                 sum = 0;
-                for (int k = 0; k < IndexesToRoll.Count; k++)
+                for (int k = 0; k < indexesToRoll.Count; k++)
                 {
-                    sum += probabilities[IndexesToRoll[k]];
+                    sum += probabilities[indexesToRoll[k]];
                     if (spin < sum)
                     {
-                        set.Add(IndexesToRoll[k]);
+                        set.Add(indexesToRoll[k]);
                     }
                 }
             }
@@ -140,36 +135,36 @@ namespace KlawiaturaAG
             
             for (int i = 0; i < len; i++)
             {
-                double probability = 1 / len * (selPress - (2 * selPress - 2) * i / (len - 1));
+                double probability = (selPress - (2 * selPress - 2) * i / (len - 1))/len;
                 probabilities[i] = probability;
             }
 
             //preparing the list of indexes based on how big the probability is
-            List<int> IndexesToRoll = new List<int>();
+            List<int> indexesToRoll = new List<int>();
 
             for (int i = 0; i < len; i++)
             {
                 int numFieldsToAdd = (int)(probabilities[i] * 100);
                 for (int k = 0; k < numFieldsToAdd; k++)
                 {
-                    IndexesToRoll.Add(i);
+                    indexesToRoll.Add(i);
                 }
             }
 
             //shuffling the list of indexes using Fisher-Yates algorithm
             Random rng = new Random();
-            int n = IndexesToRoll.Count;
+            int n = indexesToRoll.Count;
             while (n > 1)
             {
                 n--;
                 int k = rng.Next(n + 1);
-                int value = IndexesToRoll[k];
-                IndexesToRoll[k] = IndexesToRoll[n];
-                IndexesToRoll[n] = value;
+                int value = indexesToRoll[k];
+                indexesToRoll[k] = indexesToRoll[n];
+                indexesToRoll[n] = value;
             }
 
             double total = 0;
-            foreach (var i in IndexesToRoll)
+            foreach (var i in indexesToRoll)
             {
                 total += probabilities[i];
             }
@@ -182,12 +177,12 @@ namespace KlawiaturaAG
             {
                 spin = rng.NextDouble() * total;
                 sum = 0;
-                for (int k = 0; k < IndexesToRoll.Count; k++)
+                for (int k = 0; k < indexesToRoll.Count; k++)
                 {
-                    sum += probabilities[IndexesToRoll[k]];
+                    sum += probabilities[indexesToRoll[k]];
                     if (spin < sum)
                     {
-                        set.Add(IndexesToRoll[k]);
+                        set.Add(indexesToRoll[k]);
                     }
                 }
             }

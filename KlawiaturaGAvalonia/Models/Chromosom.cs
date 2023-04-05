@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace KlawiaturaAG
+﻿namespace KlawiaturaGAvalonia.Models
 {
     public class Chromosom
     {

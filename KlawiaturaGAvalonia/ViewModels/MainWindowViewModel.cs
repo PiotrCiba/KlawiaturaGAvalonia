@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using DynamicData;
-using KlawiaturaAG;
+using KlawiaturaGAvalonia.Models;
 
 namespace KlawiaturaGAvalonia.ViewModels;
 
@@ -15,20 +15,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
     public new event PropertyChangedEventHandler? PropertyChanged;
 
-    //temp, to be deleted
-    private ObservableCollection<Summary> temp { get; set; } = new(smol());
-
-    private static IEnumerable<Summary> smol()
-    {
-        var output = new List<Summary>()
-        {
-            new (1, 1, 1),
-            new (2, 0, 1),
-            new (3, 3, 1),
-            new (4, 5, 1)
-        };
-        return output;
-    }
     public void OnPropertyChanged([CallerMemberName] string? name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -95,9 +81,50 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    public ObservableCollection<Summary> GenerationSummaries { get; set; } = new ObservableCollection<Summary>();
-    public ObservableCollection<Chromosom>[] AllGenerations { get; set; } = Array.Empty<ObservableCollection<Chromosom>>();
-    public ObservableCollection<Chromosom> CurrentGeneration { get; set; } = new ObservableCollection<Chromosom>();
+    private List<Summary> _summaries;
+    public List<Summary> GenerationSummaries
+    {
+        get { return _summaries;}
+        set
+        {
+            if (_summaries != value)
+            {
+                _summaries = value;
+                OnPropertyChanged();
+            }
+                
+        }
+    }
+
+    private List<List<Chromosom>> _allgen;
+    public List<List<Chromosom>> AllGenerations
+    {
+        get { return _allgen;}
+        set
+        {
+            if (_allgen != value)
+            {
+                _allgen = value;
+                OnPropertyChanged();
+            }
+                
+        }
+    }
+
+    private List<Chromosom> _currgen;
+    public List<Chromosom> CurrentGeneration
+    {
+        get { return _currgen;}
+        set
+        {
+            if (_currgen != value)
+            {
+                _currgen = value;
+                OnPropertyChanged();
+            }
+                
+        }
+    }
     public int CurrSelGeneration { get; set; }
 
     //Button commands
@@ -198,34 +225,26 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         //this.IsEnabled = false;
 
         //calling GA asympotically, to get unpdates on the progressbar
-        (List<Summary>, List<Chromosom[]>) output = await StartTask();
+        (List<Summary>, List<List<Chromosom>>) output = await StartTask();
 
         //enabling GUI controls
         //this.IsEnabled = true;
 
+        //clearing datagrid sources
+        
         //sending Start returns to both DataGrids
-        GenerationSummaries = new ObservableCollection<Summary>(output.Item1);
-        AllGenerations = new ObservableCollection<Chromosom>[output.Item2.Count];
-        for (int i = 0; i < AllGenerations.Length; i++)
-        {
-            Chromosom[] tmp = output.Item2[i];
-            foreach (var c in tmp)
-            {
-                AllGenerations[i].Add(c);
-            }
-        }
-        CurrentGeneration = AllGenerations.Last();
+        GenerationSummaries = output.Item1;
+        AllGenerations = output.Item2;
+        CurrSelGeneration = AllGenerations.Count - 1;
+        CurrentGeneration = AllGenerations[CurrSelGeneration];
         
-        //GenerationsDataGrid.SelectedIndex = GenerationSummaries.Length-1;
-        //ChromosomeDataGrid.SelectedIndex = 0;
-        
-        CurrSelGeneration = AllGenerations.Length;
-        OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(GenerationSummaries));
+        OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(CurrSelGeneration));
+        OnPropertyChanged(nameof(CurrentGeneration));
     }
     
-    private async Task<(List<Summary>, List<Chromosom[]>)> StartTask()
+    private async Task<(List<Summary>, List<List<Chromosom>>)> StartTask()
     {
         //calling Start method to execute GA
         return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress));

@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
-namespace KlawiaturaAG
+namespace KlawiaturaGAvalonia.Models
 {
     public static class CrossoverModule
     {
-        public static Chromosom[] Select(Chromosom[] parents, int mode, int NumberOfCildren)
+        public static Chromosom[] Select(Chromosom[] parents, int mode, int numberOfCildren)
         {
-            Chromosom[] output = new Chromosom[NumberOfCildren];
-            for(int i = 0; i < NumberOfCildren; i++)
+            Chromosom[] output = new Chromosom[numberOfCildren];
+            for(int i = 0; i < numberOfCildren; i++)
             {
                 output[i] = new Chromosom();
             }
@@ -21,7 +17,7 @@ namespace KlawiaturaAG
             switch (mode)
             {
                 case 0:
-                    if (NumberOfCildren == 1)
+                    if (numberOfCildren == 1)
                         output[0].layout = OrderCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -30,7 +26,7 @@ namespace KlawiaturaAG
                     }
                     break;
                 case 1:
-                    if (NumberOfCildren == 1)
+                    if (numberOfCildren == 1)
                         output[0].layout = CycleCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -39,7 +35,7 @@ namespace KlawiaturaAG
                     }
                     break;
                 case 2:
-                    if (NumberOfCildren == 1)
+                    if (numberOfCildren == 1)
                         output[0].layout = EdgeRecombinationCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -48,7 +44,7 @@ namespace KlawiaturaAG
                     }
                     break;
                 case 3:
-                    if (NumberOfCildren == 1)
+                    if (numberOfCildren == 1)
                         output[0].layout = AlternatingEdgeCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -189,9 +185,9 @@ namespace KlawiaturaAG
         {
             int length = parentOne.layout.Length;
             Random rnd = new Random();
-            Dictionary<char, char>[] ArcList = new Dictionary<char, char>[2];
-            ArcList[0] = BuildArcList(parentOne.layout);
-            ArcList[1] = BuildArcList(parentTwo.layout);
+            Dictionary<char, char>[] arcList = new Dictionary<char, char>[2];
+            arcList[0] = BuildArcList(parentOne.layout);
+            arcList[1] = BuildArcList(parentTwo.layout);
 
             char[] child = new char[length];
             child[0] = parentOne.layout[0];
@@ -199,7 +195,7 @@ namespace KlawiaturaAG
 
             for(int i = 1; i < length; i++)
             {
-                char nextone = ArcList[parentSwitch][child[i-1]];
+                char nextone = arcList[parentSwitch][child[i-1]];
                 if (!child.Contains(nextone))
                 {
                     child[i] = nextone;
@@ -207,7 +203,7 @@ namespace KlawiaturaAG
                 }
                 else
                 {
-                    var tempArr = (from a in ArcList[0] where !child.Contains(a.Key) select a.Key).ToArray();
+                    var tempArr = (from a in arcList[0] where !child.Contains(a.Key) select a.Key).ToArray();
                     int tempIndex = rnd.Next(tempArr.Length);
                     child[i] = tempArr[tempIndex];
                 }
@@ -297,19 +293,19 @@ namespace KlawiaturaAG
         private static Dictionary<char, char> BuildArcList(string input)
         {
             int len = input.Length;
-            Dictionary<char,char> ArcList = new Dictionary<char, char>();
+            Dictionary<char,char> arcList = new Dictionary<char, char>();
             for(int i = 0; i < len; i++)
             {
                 if (i < len-1)
                 {
-                    ArcList[input[i]] = input[i + 1];
+                    arcList[input[i]] = input[i + 1];
                 }
                 else
                 {
-                    ArcList[input[i]] = input[0];
+                    arcList[input[i]] = input[0];
                 }
             }
-            return ArcList;
+            return arcList;
         }
     }
 }
