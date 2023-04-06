@@ -4,11 +4,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using KlawiaturaGAvalonia.Models;
 using KlawiaturaGAvalonia.Views;
 using OxyPlot;
+using OxyPlot.Series;
 
 namespace KlawiaturaGAvalonia.ViewModels;
 
@@ -23,7 +26,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     //default constructor
     public MainWindowViewModel()
     {
-        datapoints = new List<DataPoint>();
         _summaries = new List<Summary>();
         _currgen = new List<Chromosom>();
         ChangeLayoutSelection();
@@ -272,6 +274,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         AllGenerations = new List<Chromosom[]>(output.Item2);
         CurrentGeneration = AllGenerations.Last().ToList();
         
+        //for ShowGraph, let's try something like this...
+        datapoints = new Collection<DPoint>();
+        foreach (var s in GenerationSummaries)
+            datapoints.Add(new DPoint { gen = s.IdPokolenia, fit = s.BestFitness });
+        OnPropertyChanged(nameof(datapoints));
+        
         OnPropertyChanged(nameof(GenerationSummaries));
         OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(CurrSelGeneration));
@@ -311,24 +319,20 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     
     
     //graph workings
-    public class Point2D
-    {
-        public double x { get; set; }
-        public double y { get; set; }
-    }
-    
-    public IList<DataPoint> datapoints { get; private set; }
+
+    public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
     public void DisplayGraph()
     {
         if (GenerationSummaries.Count>0)
         {
-            datapoints.Clear();
-            foreach (var s in GenerationSummaries)
-                datapoints.Add(new DataPoint(s.IdPokolenia,s.BestFitness));
             FitnessGraph window2 = new FitnessGraph();
             window2.Show();
         }
     }
-    
-    
+
+    public class DPoint
+    {
+        public int gen { get; set; }
+        public double fit { get; set; }
+    }
 }

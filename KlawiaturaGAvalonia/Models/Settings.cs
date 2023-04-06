@@ -22,7 +22,7 @@
         public bool fullMemory { get; set; } = true;
         public bool isanimated { get; set; } = false;
         public bool currStopMode { get; set; } = false;
-        public int gensToRun { get; set; } = 25;
+        public int gensToRun { get; set; } = 250;
         public double epsToStopAt { get; set; } = 0.01;
         
     }
