@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia"
+        xmlns:viewModels="clr-namespace:KlawiaturaGAvalonia.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="KlawiaturaGAvalonia.Views.FitnessGraph"
+        x:DataType="viewModels:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Fitness Plot" Height="400" Width="600"
+        Background="{Binding PrimaryColour}">
+    <Grid>
+        <oxy:Plot>
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis Title="Pokolenia"
+                                Position="Bottom"
+                                MajorGridlineStyle="Solid"
+                                MinorGridlineStyle="Solid"
+                                MinimumPadding="0"
+                                MaximumPadding="0"/>
+                <oxy:LinearAxis Title="Fitness"
+                                Position="Left"
+                                MajorGridlineStyle="Solid"
+                                MinorGridlineStyle="Solid"
+                                FontSize="12"
+                                TicklineColor="#FF190000"
+                                TickStyle="Outside"/>
+            </oxy:Plot.Axes>
+            <oxy:Plot.Series>
+                <oxy:LineSeries Items="{Binding datapoints}" 
+                                DataFieldX="x"
+                                DataFieldY="y"
+                                MarkerSize="2" 
+                                MarkerType="Plus" 
+                                StrokeThickness="1" 
+                                MarkerStroke="Red"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
+    </Grid>
+</Window>
+
+<!--
+<oxy:Plot.Axes>
+                <oxy:LinearAxis Title="Pokolenia"
+                                Position="Bottom"
+                                MajorGridlineStyle="Solid"
+                                MinorGridlineStyle="Solid"
+                                MinimumPadding="0"
+                                MaximumPadding="0"/>
+                <oxy:LinearAxis Title="Fitness"
+                                Position="Left"
+                                MajorGridlineStyle="Solid"
+                                MinorGridlineStyle="Solid"
+                                FontSize="12"
+                                TicklineColor="#FF190000"
+                                TickStyle="Outside"/>
+            </oxy:Plot.Axes>
+-->

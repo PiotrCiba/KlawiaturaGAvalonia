@@ -131,3 +131,5 @@ D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\obj\Debug\net7.0\refint\Kl
 D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\obj\Debug\net7.0\KlawiaturaGAvalonia.pdb
 D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\obj\Debug\net7.0\KlawiaturaGAvalonia.genruntimeconfig.cache
 D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\obj\Debug\net7.0\ref\KlawiaturaGAvalonia.dll
+D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\bin\Debug\net7.0\OxyPlot.Avalonia.dll
+D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\bin\Debug\net7.0\OxyPlot.dll

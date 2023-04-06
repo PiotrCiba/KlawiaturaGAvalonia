@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Avalonia.Interactivity;
 using KlawiaturaGAvalonia.Models;
+using KlawiaturaGAvalonia.Views;
+using OxyPlot;
 
 namespace KlawiaturaGAvalonia.ViewModels;
 
@@ -19,6 +23,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     //default constructor
     public MainWindowViewModel()
     {
+        datapoints = new List<DataPoint>();
         _summaries = new List<Summary>();
         _currgen = new List<Chromosom>();
         ChangeLayoutSelection();
@@ -232,13 +237,16 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
                 break;
         }
 
-        SelectedLayoutName = Layouts[SelectedLayout];
-        CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
-        CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
-        OnPropertyChanged(nameof(CurrentLayout));
-        OnPropertyChanged(nameof(SelectedLayoutName));
-        OnPropertyChanged(nameof(CurrentLayoutFitness));
-        OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
+        if (SelectedLayout >= 0)
+        {
+            SelectedLayoutName = Layouts[SelectedLayout];
+            CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+            CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
+            OnPropertyChanged(nameof(CurrentLayout));
+            OnPropertyChanged(nameof(SelectedLayoutName));
+            OnPropertyChanged(nameof(CurrentLayoutFitness));
+            OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
+        }
     }
 
     public async void  OnStartButtonClick()
@@ -300,6 +308,27 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
         }
     }
-    //internal methods
-
+    
+    
+    //graph workings
+    public class Point2D
+    {
+        public double x { get; set; }
+        public double y { get; set; }
+    }
+    
+    public IList<DataPoint> datapoints { get; private set; }
+    public void DisplayGraph()
+    {
+        if (GenerationSummaries.Count>0)
+        {
+            datapoints.Clear();
+            foreach (var s in GenerationSummaries)
+                datapoints.Add(new DataPoint(s.IdPokolenia,s.BestFitness));
+            FitnessGraph window2 = new FitnessGraph();
+            window2.Show();
+        }
+    }
+    
+    
 }
