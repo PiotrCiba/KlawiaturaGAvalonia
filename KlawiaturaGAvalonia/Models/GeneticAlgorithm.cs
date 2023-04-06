@@ -32,13 +32,13 @@ namespace KlawiaturaGAvalonia.Models
                 new double[] { 4, 4, 3, 2, 4, 4, 2, 3, 4, 4 }
         };
 
-        public static (List<Summary>, List<List<Chromosom>>) Start(Settings s, IProgress<int> progress)
+        public static (List<Summary>, List<Chromosom[]>) Start(Settings s, IProgress<int> progress)
         {
             //Czacza idzie tak: Rodzice > Fitness > CarryOver > Selekcja > Crossover > Mutacja > Dzieci > "Rodzice = Dzieci" > repeat
 
             //preparing the output variable;
             List<Summary> genSummaries = new List<Summary>();
-            List<List<Chromosom>> pokolenia = new List<List<Chromosom>>();
+            List<Chromosom[]> pokolenia = new List<Chromosom[]>();
 
             //Parent generation
             List<Chromosom> parents = new List<Chromosom>();
@@ -58,7 +58,7 @@ namespace KlawiaturaGAvalonia.Models
             parents = parents.OrderBy(p => p.fitness).ToList();
 
             //adding the 0-th generation to Pokolenia
-            pokolenia.Add(parents);
+            pokolenia.Add(parents.ToArray());
 
             //do-while control variables breakcondition to exit, get to count generations (for generation number exit)
             bool breakCondition = false;
@@ -129,7 +129,7 @@ namespace KlawiaturaGAvalonia.Models
                 //if fullmemory, add children to Pokolenia
                 if (s.fullMemory)
                 {
-                    pokolenia.Add(parents);
+                    pokolenia.Add(parents.ToArray());
                 }
                 //summary prep, add to GenSummaries
                 fitnesses = (from p in parents select p.fitness);

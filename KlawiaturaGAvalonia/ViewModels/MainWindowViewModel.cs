@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using DynamicData;
 using KlawiaturaGAvalonia.Models;
 
 namespace KlawiaturaGAvalonia.ViewModels;
@@ -22,6 +19,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     //default constructor
     public MainWindowViewModel()
     {
+        _summaries = new List<Summary>();
+        _currgen = new List<Chromosom>();
         ChangeLayoutSelection();
     }
     //Colour fields
@@ -96,8 +95,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    private List<List<Chromosom>> _allgen;
-    public List<List<Chromosom>> AllGenerations
+    private List<Chromosom[]> _allgen = new List<Chromosom[]>();
+    public List<Chromosom[]> AllGenerations
     {
         get { return _allgen;}
         set
@@ -107,7 +106,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
                 _allgen = value;
                 OnPropertyChanged();
             }
-                
         }
     }
 
@@ -122,7 +120,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
                 _currgen = value;
                 OnPropertyChanged();
             }
-                
         }
     }
 
@@ -255,7 +252,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         //this.IsEnabled = false;
 
         //calling GA asympotically, to get unpdates on the progressbar
-        (List<Summary>, List<List<Chromosom>>) output = await StartTask();
+        (List<Summary>, List<Chromosom[]>) output = await StartTask();
 
         //enabling GUI controls
         //this.IsEnabled = true;
@@ -264,12 +261,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         
         //sending Start returns to both DataGrids
         GenerationSummaries = output.Item1;
-        foreach (var lc in output.Item2)
-        {
-            AllGenerations.Add(lc);
-        }
-        CurrSelGeneration = AllGenerations.Count - 1;
-        CurrentGeneration = AllGenerations[CurrSelGeneration];
+        AllGenerations = new List<Chromosom[]>(output.Item2);
+        CurrentGeneration = AllGenerations.Last().ToList();
         
         OnPropertyChanged(nameof(GenerationSummaries));
         OnPropertyChanged(nameof(AllGenerations));
@@ -277,29 +270,35 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         OnPropertyChanged(nameof(CurrentGeneration));
     }
 
-    private async Task<(List<Summary>, List<List<Chromosom>>)> StartTask()
+    private async Task<(List<Summary>, List<Chromosom[]>)> StartTask()
     {
-        //calling Start method to execute GA 
-        return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress));
+        //calling Start method to execute GA
+        return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress ?? throw new InvalidOperationException()));
     }
 
     public void OnGenSelectionChanged()
     {
-        CurrentGeneration = AllGenerations[CurrSelGeneration];
-        OnPropertyChanged(nameof(CurrentGeneration));
-        OnChromosomeSelectionChanged();
+        if (CurrSelGeneration >= 0)
+        {
+            CurrentGeneration = AllGenerations[CurrSelGeneration].ToList();
+            OnPropertyChanged(nameof(CurrentGeneration));
+            OnChromosomeSelectionChanged();
+        }
     }
 
     public void OnChromosomeSelectionChanged()
     {
-        SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
-        CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
-        CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
-        CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
-        OnPropertyChanged(nameof(CurrentLayout));
-        OnPropertyChanged(nameof(SelectedLayoutName));
-        OnPropertyChanged(nameof(CurrentLayoutFitness));
-        OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
+        if (CurrSelChromosome>=0)
+        {
+            SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
+            CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
+            CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+            CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
+            OnPropertyChanged(nameof(CurrentLayout));
+            OnPropertyChanged(nameof(SelectedLayoutName));
+            OnPropertyChanged(nameof(CurrentLayoutFitness));
+            OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
+        }
     }
     //internal methods
 
