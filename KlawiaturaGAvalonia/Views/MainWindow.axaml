@@ -460,7 +460,7 @@
         <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
         <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Pokolenia"/>
         <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="1,4,5,1" Content="Graph >>>"/>
-        <DataGrid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="2" Margin="5,35,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Items="{Binding GenerationSummaries, Mode=TwoWay}">
+        <DataGrid Grid.Column="1" Grid.Row="0"  Grid.RowSpan="2" Margin="5,35,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Items="{Binding GenerationSummaries, Mode=TwoWay}" SelectedIndex="{Binding CurrSelGeneration}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Gen" Binding="{Binding IdPokolenia}"/>
                 <DataGridTextColumn Width="3*" Header="Best Fit." Binding="{Binding BestFitness}"/>
@@ -470,9 +470,8 @@
         
         <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Classes="bb"/>
         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Chromosomy"/>
-        <DataGrid Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False"  Items="{Binding CurrentGeneration, Mode=TwoWay}">
+        <DataGrid Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False"  Items="{Binding CurrentGeneration, Mode=TwoWay}" SelectedIndex="{Binding CurrSelChromosome}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="1*" Header="Layout" Binding="{Binding layout}"/>
                 <DataGridTextColumn Width="5*" Header="Fitness" Binding="{Binding fitness}"/>
             </DataGrid.Columns>
         </DataGrid>

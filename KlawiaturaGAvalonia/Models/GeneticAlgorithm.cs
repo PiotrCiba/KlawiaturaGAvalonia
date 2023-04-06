@@ -99,7 +99,7 @@ namespace KlawiaturaGAvalonia.Models
 
 
                     //iterate over newly born chlidren
-                    for (int i = 0; i < s.childNumber; i++)
+                    for (int i = 0; i <= s.childNumber; i++)
                     {
                         //mutationModule, may hit, may not hit
                         childrenTemp[i] = MutationModule.Select(childrenTemp[i], s.currMut, s.mutChance, s.mutSeverity);
@@ -141,7 +141,7 @@ namespace KlawiaturaGAvalonia.Models
                 if (!s.currStopMode)
                 {
                     //update the progress for progressbar
-                    report = report = (int)(((double)gen / s.gensToRun) * 100);
+                    report = (int)((double)gen / s.gensToRun * 100);
 
                     //gens to run mode
                     if (gen >= s.gensToRun)

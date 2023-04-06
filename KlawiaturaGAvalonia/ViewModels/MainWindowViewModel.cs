@@ -33,7 +33,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public string BorderColour { get; set; } = "Gray";
 
     //Virtual keyboard layout visualisation contents
-    public int KbFontSize { get; set; } = 20;
+    public int KbFontSize { get; set; } = 19;
     public string[][] CurrentLayout { get; set; } =
     {
         new [] {"Q","W","E","R","T","Y","U","I","O","P","[","]"},
@@ -125,7 +125,37 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
                 
         }
     }
-    public int CurrSelGeneration { get; set; }
+
+    private int _currSelGen;
+
+    public int CurrSelGeneration
+    {
+        get { return _currSelGen;}
+        set
+        {
+            if (_currSelGen != value)
+            {
+                _currSelGen = value;
+                OnGenSelectionChanged();
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private int _currSelChrom;
+    public int CurrSelChromosome
+    {
+        get { return _currSelChrom;}
+        set
+        {
+            if (_currSelChrom != value)
+            {
+                _currSelChrom = value;
+                OnChromosomeSelectionChanged();
+                OnPropertyChanged();
+            }
+        }
+    }
 
     //Button commands
     private bool ShowingCosts { get; set; }
@@ -234,7 +264,10 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         
         //sending Start returns to both DataGrids
         GenerationSummaries = output.Item1;
-        AllGenerations = output.Item2;
+        foreach (var lc in output.Item2)
+        {
+            AllGenerations.Add(lc);
+        }
         CurrSelGeneration = AllGenerations.Count - 1;
         CurrentGeneration = AllGenerations[CurrSelGeneration];
         
@@ -243,11 +276,30 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         OnPropertyChanged(nameof(CurrSelGeneration));
         OnPropertyChanged(nameof(CurrentGeneration));
     }
-    
+
     private async Task<(List<Summary>, List<List<Chromosom>>)> StartTask()
     {
-        //calling Start method to execute GA
+        //calling Start method to execute GA 
         return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress));
+    }
+
+    public void OnGenSelectionChanged()
+    {
+        CurrentGeneration = AllGenerations[CurrSelGeneration];
+        OnPropertyChanged(nameof(CurrentGeneration));
+        OnChromosomeSelectionChanged();
+    }
+
+    public void OnChromosomeSelectionChanged()
+    {
+        SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
+        CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
+        CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+        CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
+        OnPropertyChanged(nameof(CurrentLayout));
+        OnPropertyChanged(nameof(SelectedLayoutName));
+        OnPropertyChanged(nameof(CurrentLayoutFitness));
+        OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
     }
     //internal methods
 

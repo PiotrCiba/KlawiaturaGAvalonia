@@ -6,10 +6,10 @@ namespace KlawiaturaGAvalonia.Models
 {
     public static class CrossoverModule
     {
-        public static Chromosom[] Select(Chromosom[] parents, int mode, int numberOfCildren)
+        public static Chromosom[] Select(Chromosom[] parents, int mode, int numberOfChildren)
         {
-            Chromosom[] output = new Chromosom[numberOfCildren];
-            for(int i = 0; i < numberOfCildren; i++)
+            Chromosom[] output = new Chromosom[numberOfChildren+1];
+            for(int i = 0; i <= numberOfChildren; i++)
             {
                 output[i] = new Chromosom();
             }
@@ -17,7 +17,7 @@ namespace KlawiaturaGAvalonia.Models
             switch (mode)
             {
                 case 0:
-                    if (numberOfCildren == 1)
+                    if (numberOfChildren == 0)
                         output[0].layout = OrderCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -26,7 +26,7 @@ namespace KlawiaturaGAvalonia.Models
                     }
                     break;
                 case 1:
-                    if (numberOfCildren == 1)
+                    if (numberOfChildren == 0)
                         output[0].layout = CycleCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -35,7 +35,7 @@ namespace KlawiaturaGAvalonia.Models
                     }
                     break;
                 case 2:
-                    if (numberOfCildren == 1)
+                    if (numberOfChildren == 0)
                         output[0].layout = EdgeRecombinationCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -44,7 +44,7 @@ namespace KlawiaturaGAvalonia.Models
                     }
                     break;
                 case 3:
-                    if (numberOfCildren == 1)
+                    if (numberOfChildren == 0)
                         output[0].layout = AlternatingEdgeCrossover(parentOne: parents[0], parentTwo: parents[1]);
                     else
                     {
@@ -56,7 +56,7 @@ namespace KlawiaturaGAvalonia.Models
             return output;
         }
 
-        public static string OrderCrossover(Chromosom parentOne, Chromosom parentTwo)
+        private static string OrderCrossover(Chromosom parentOne, Chromosom parentTwo)
         {
             //parents DNA extraction
             string parentA,parentB;
@@ -73,9 +73,7 @@ namespace KlawiaturaGAvalonia.Models
             //swap A and B if they're backwards
             if(pointA > pointB)
             {
-                int tmp = pointA;
-                pointA = pointB;
-                pointB = tmp;
+                (pointA, pointB) = (pointB, pointA);
             }
 
             char[] child = new char[len];
@@ -98,7 +96,7 @@ namespace KlawiaturaGAvalonia.Models
             return new string(child);
         }
 
-        public static string CycleCrossover(Chromosom parentOne, Chromosom parentTwo)
+        private static string CycleCrossover(Chromosom parentOne, Chromosom parentTwo)
         {
             string p1 = parentOne.layout;
             string p2 = parentTwo.layout;
@@ -133,7 +131,7 @@ namespace KlawiaturaGAvalonia.Models
             return new string(child);
         }
 
-        public static string EdgeRecombinationCrossover(Chromosom parentOne, Chromosom parentTwo)
+        private static string EdgeRecombinationCrossover(Chromosom parentOne, Chromosom parentTwo)
         {
             //parents DNA extraction
             string parentA, parentB;
@@ -181,7 +179,7 @@ namespace KlawiaturaGAvalonia.Models
             return new string(child);
         }
 
-        public static string AlternatingEdgeCrossover(Chromosom parentOne, Chromosom parentTwo)
+        private static string AlternatingEdgeCrossover(Chromosom parentOne, Chromosom parentTwo)
         {
             int length = parentOne.layout.Length;
             Random rnd = new Random();
