@@ -436,9 +436,9 @@
                     <RowDefinition Height="2.5*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Classes="Txt" Text="Zatrzymaj po:"/>
-                <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="True" Content="pokoleniach"/>
+                <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="{Binding Settings.currStopMode}" Content="pokoleniach"/>
                 <RadioButton Grid.Row="2" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" Content="poprawa &lt;"/>
-                <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="true"/>
+                <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="{Binding Settings.fullMemory}"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="5" Margin="1,1,1,1">
@@ -451,7 +451,7 @@
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="1" Classes="TB" Text="{Binding Settings.gensToRun}"/>
                 <TextBox Grid.Row="2" Classes="TB" Text="{Binding Settings.epsToStopAt}"/>
-                <Button Grid.Row="3" Margin="2" Content="Zapisz"/>
+                <Button Grid.Row="3" Margin="2" Content="Zapisz" Command="{Binding SaveButtonClick}"/>
                 <Button Grid.Row="4" Margin="2" Content="Start" Command="{Binding OnStartButtonClick}"/>
             </Grid>
 

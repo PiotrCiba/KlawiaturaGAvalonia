@@ -22,3 +22,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/SaveWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using KlawiaturaGAvalonia.Models;
@@ -22,7 +25,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public void OnPropertyChanged([CallerMemberName] string? name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-    } 
+    }
+
     //default constructor
     public MainWindowViewModel()
     {
@@ -30,6 +34,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         _currgen = new List<Chromosom>();
         ChangeLayoutSelection();
     }
+
     //Colour fields
     public string PrimaryColour { get; set; } = "White";
 
@@ -40,24 +45,27 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     //Virtual keyboard layout visualisation contents
     public int KbFontSize { get; set; } = 19;
+
     public string[][] CurrentLayout { get; set; } =
     {
-        new [] {"Q","W","E","R","T","Y","U","I","O","P","[","]"},
-        new [] {"A","S","D","F","G","H","J","K","L",";","'"}, 
-        new [] {"Z","X","C","V","B","N","M",",",".","?"}
+        new[] { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]" },
+        new[] { "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'" },
+        new[] { "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?" }
     };
 
     public string[] Layouts { get; set; } = { "QWERTY", "Dvorak", "ARENSITO", "Colemak", "Workman", "<Selected>" };
     private int _selectedlayout;
+
     public int SelectedLayout
     {
-        get { return _selectedlayout;}
+        get { return _selectedlayout; }
         set
         {
             _selectedlayout = value;
             ChangeLayoutSelection();
         }
     }
+
     public string SelectedLayoutName { get; set; } = "QWERTY";
     public double CurrentLayoutFitness { get; set; }
     public const double QwertyFitness = 243.5024299999992;
@@ -70,7 +78,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public string[] ChildNumbers { get; set; } = { "1", "2" };
     public string[] CarryModes { get; set; } = { "no carry", "Elityzm (%)" };
     public string[] SelectionAlgorithms { get; set; } = { "Turniej", "Ruletka", "Rank" };
-    public string[] CrossoverAlgorithms { get; set; } = { "OX", "CX", "ERX", "AEX"};
+    public string[] CrossoverAlgorithms { get; set; } = { "OX", "CX", "ERX", "AEX" };
     public string[] MutationAlgorithms { get; set; } = { "Pair Swap", "Partial Scramble", "Inversion Mutation" };
 
     //Results contents
@@ -79,7 +87,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public int CurrentProgressValue
     {
-        get { return _currentProgressValue;}
+        get { return _currentProgressValue; }
         set
         {
             _currentProgressValue = value;
@@ -88,9 +96,10 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     }
 
     private List<Summary> _summaries;
+
     public List<Summary> GenerationSummaries
     {
-        get { return _summaries;}
+        get { return _summaries; }
         set
         {
             if (_summaries != value)
@@ -98,14 +107,15 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
                 _summaries = value;
                 OnPropertyChanged();
             }
-                
+
         }
     }
 
     private List<Chromosom[]> _allgen = new List<Chromosom[]>();
+
     public List<Chromosom[]> AllGenerations
     {
-        get { return _allgen;}
+        get { return _allgen; }
         set
         {
             if (_allgen != value)
@@ -117,9 +127,10 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     }
 
     private List<Chromosom> _currgen;
+
     public List<Chromosom> CurrentGeneration
     {
-        get { return _currgen;}
+        get { return _currgen; }
         set
         {
             if (_currgen != value)
@@ -134,7 +145,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public int CurrSelGeneration
     {
-        get { return _currSelGen;}
+        get { return _currSelGen; }
         set
         {
             if (_currSelGen != value)
@@ -147,9 +158,10 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     }
 
     private int _currSelChrom;
+
     public int CurrSelChromosome
     {
-        get { return _currSelChrom;}
+        get { return _currSelChrom; }
         set
         {
             if (_currSelChrom != value)
@@ -169,22 +181,26 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (ShowingCosts)
         {
             ShowingCosts = false;
-            CurrentLayout = new []{
-                new [] {"Q","W","E","R","T","Y","U","I","O","P","[","]"},
-                new [] {"A","S","D","F","G","H","J","K","L",";","'"}, 
-                new [] {"Z","X","C","V","B","N","M",",",".","?"}
+            CurrentLayout = new[]
+            {
+                new[] { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]" },
+                new[] { "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'" },
+                new[] { "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?" }
             };
-            PointKey = new []{ "White", "White", "White", "White", "White", "LightGray" };
-        }else
+            PointKey = new[] { "White", "White", "White", "White", "White", "LightGray" };
+        }
+        else
         {
             ShowingCosts = true;
-            CurrentLayout = new []{
-                new [] {"4","2","2","3","4","4","3","2","2","4","5","5"},
-                new [] {"1.5","1","1","1","3","3","1","1","1","1.5","3"}, 
-                new [] {"4","4","3","2","4","4","2","3","4","4"}
+            CurrentLayout = new[]
+            {
+                new[] { "4", "2", "2", "3", "4", "4", "3", "2", "2", "4", "5", "5" },
+                new[] { "1.5", "1", "1", "1", "3", "3", "1", "1", "1", "1.5", "3" },
+                new[] { "4", "4", "3", "2", "4", "4", "2", "3", "4", "4" }
             };
-            PointKey = new []{ "#FF9ECB51", "#FFB3D46F", "#FFC7DE91", "#FFEF8487", "#FFDD2F39", "#FFB0252C" };
+            PointKey = new[] { "#FF9ECB51", "#FFB3D46F", "#FFC7DE91", "#FFEF8487", "#FFDD2F39", "#FFB0252C" };
         }
+
         OnPropertyChanged(nameof(CurrentLayout));
         OnPropertyChanged(nameof(PointKey));
     }
@@ -193,7 +209,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         if (ShowingCosts)
             ShowCost();
-        
+
         switch (SelectedLayout)
         {
             //Layout is saved in a string[] of {2, 12, 11, 10}
@@ -251,12 +267,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    public async void  OnStartButtonClick()
+    public async void OnStartButtonClick()
     {
         //Re-setting the progressbar
 
         //setting up the progress updates
-        Progress = new Progress<int>( value => CurrentProgressValue = value );
+        Progress = new Progress<int>(value => CurrentProgressValue = value);
 
         //disabling GUI controls
         //this.IsEnabled = false;
@@ -268,18 +284,18 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         //this.IsEnabled = true;
 
         //clearing datagrid sources
-        
+
         //sending Start returns to both DataGrids
         GenerationSummaries = output.Item1;
         AllGenerations = new List<Chromosom[]>(output.Item2);
         CurrentGeneration = AllGenerations.Last().ToList();
-        
+
         //for ShowGraph, let's try something like this...
         datapoints = new Collection<DPoint>();
         foreach (var s in GenerationSummaries)
             datapoints.Add(new DPoint { gen = s.IdPokolenia, fit = s.BestFitness });
         OnPropertyChanged(nameof(datapoints));
-        
+
         OnPropertyChanged(nameof(GenerationSummaries));
         OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(CurrSelGeneration));
@@ -289,7 +305,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     private async Task<(List<Summary>, List<Chromosom[]>)> StartTask()
     {
         //calling Start method to execute GA
-        return await Task.Run(() => GeneticAlgorithm.Start(Settings, Progress ?? throw new InvalidOperationException()));
+        return await Task.Run(() =>
+            GeneticAlgorithm.Start(Settings, Progress ?? throw new InvalidOperationException()));
     }
 
     public void OnGenSelectionChanged()
@@ -304,7 +321,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public void OnChromosomeSelectionChanged()
     {
-        if (CurrSelChromosome>=0)
+        if (CurrSelChromosome >= 0)
         {
             SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
             CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
@@ -316,9 +333,29 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             OnPropertyChanged(nameof(CurrentImprovementOverQwerty));
         }
     }
+
+    //Save button behaviour
+
+    public void SaveButtonClick()
+    {
+        if (GenerationSummaries.Count > 0)
+        {
+            SaveWindow save = new SaveWindow();
+            save.Show();
+        }
+    }
+
+    public void SaveCSV()
+    {
+        
+    }
+
+    public void CreateAhScript()
+    {
+        
+    }
     
-    
-    //graph workings
+    //graph
 
     public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
     public void DisplayGraph()

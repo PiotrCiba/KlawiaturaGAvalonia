@@ -29,8 +29,12 @@
                                 TickStyle="Outside"/>
             </oxy:Plot.Axes>
             <oxy:Plot.Series>
-                <oxy:ScatterSeries Items="{Binding datapoints}"
-                                   MarkerType="Plus" MarkerSize="2" MarkerFill="Red"/>
+                <oxy:LineSeries Title="Fn(gen)"
+                                Items="{Binding GenerationSummaries}"
+                                DataFieldX="idPokolenia"
+                                DataFieldY="bestFitness"
+                                Color="Red"
+                                StrokeThickness="2"/>
             </oxy:Plot.Series>
         </oxy:Plot>
     </Grid>

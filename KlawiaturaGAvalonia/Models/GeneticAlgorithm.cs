@@ -138,7 +138,7 @@ namespace KlawiaturaGAvalonia.Models
 
                 int report = 0;
 
-                if (!s.currStopMode)
+                if (s.currStopMode)
                 {
                     //update the progress for progressbar
                     report = (int)((double)gen / s.gensToRun * 100);

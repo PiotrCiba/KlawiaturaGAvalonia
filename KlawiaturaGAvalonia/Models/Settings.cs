@@ -21,7 +21,7 @@
         //GA overall settings
         public bool fullMemory { get; set; } = true;
         public bool isanimated { get; set; } = false;
-        public bool currStopMode { get; set; } = false;
+        public bool currStopMode { get; set; } = true;
         public int gensToRun { get; set; } = 250;
         public double epsToStopAt { get; set; } = 0.01;
         
