@@ -7,6 +7,7 @@
         <entry key="KlawiaturaGAvalonia/Views/FitnessGraph.axaml" value="KlawiaturaGAvalonia/KlawiaturaGAvalonia.csproj" />
         <entry key="KlawiaturaGAvalonia/Views/FitnessGraph.xaml" value="KlawiaturaGAvalonia/KlawiaturaGAvalonia.csproj" />
         <entry key="KlawiaturaGAvalonia/Views/MainWindow.axaml" value="KlawiaturaGAvalonia/KlawiaturaGAvalonia.csproj" />
+        <entry key="KlawiaturaGAvalonia/Views/SaveWindow.axaml" value="KlawiaturaGAvalonia/KlawiaturaGAvalonia.csproj" />
       </map>
     </option>
   </component>

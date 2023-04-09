@@ -7,19 +7,9 @@
         x:Class="KlawiaturaGAvalonia.Views.SaveWindow"
         x:DataType="viewModels:MainWindowViewModel"
         Title="SaveWindow" Width="300" Height="100">
-    <Window.Styles>
-        <Style Selector="Border.bb">
-            <Setter Property="BorderBrush" Value="{Binding BorderColour}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="2"/>
-            <Setter Property="Margin" Value="1.5,1.5,1.5,1.5"/>
-        </Style>
-    </Window.Styles>
     
-    <Border Classes="bb">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button HorizontalAlignment="Center" Command="{Binding SaveCSV}">Plik .csv</Button>
-            <Button HorizontalAlignment="Center" Command="{Binding CreateAhScript}">Skrypt AH</Button>
-        </StackPanel>
-    </Border>
+    <StackPanel VerticalAlignment="Center">
+        <Button HorizontalAlignment="Center" Command="{Binding SaveCSV}" Content="Save to csv/txt"/>
+        <Button HorizontalAlignment="Center" Command="{Binding CreateAhScript}" Content="Skrypt AH"/>
+    </StackPanel>   
 </Window>

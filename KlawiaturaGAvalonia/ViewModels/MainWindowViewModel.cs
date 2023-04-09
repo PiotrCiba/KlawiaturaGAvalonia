@@ -347,12 +347,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public void SaveCSV()
     {
-        
+        Console.Write("saving scv");
     }
 
     public void CreateAhScript()
     {
-        
+        Console.Write("making autohotkey");
     }
     
     //graph
