@@ -21,6 +21,7 @@ using KlawiaturaGAvalonia.Models;
 using KlawiaturaGAvalonia.Views;
 using OxyPlot;
 using OxyPlot.Series;
+using Path = System.IO.Path;
 
 namespace KlawiaturaGAvalonia.ViewModels;
 
@@ -344,19 +345,135 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public async void SaveBtn()
     {
         var svdlg = new SaveFileDialog();
-        if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (Avalonia.Application.Current != null && Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            svdlg.InitialFileName = "result.csv";
+            svdlg.InitialFileName = "result-"+DateTime.Now.ToShortDateString()+".csv";
             svdlg.Directory = "C:/";
+            svdlg.Filters = new List<FileDialogFilter>()
+            {
+                new() { Name = "Częściowy zapis wyników (.csv)", Extensions = new List<string> { "csv" } },
+                new() { Name = "Pełen zapis wyników (.txt)", Extensions = new List<string> { "txt" } },
+                new() { Name = "Skrypt AutoHotkey z aktualnym układem (.ahk)", Extensions = new List<string> { "ahk" } }
+            };
             var file = await svdlg.ShowAsync(desktop.MainWindow);
             Debug.WriteLine(file);
             if (file != null)
             {
-
+                var extension = Path.GetExtension(file);
+                switch (extension)
+                {
+                    case ".csv":
+                        WriteSummariesToCsv(file);
+                        break;
+                    case ".txt":
+                        WriteResultsToTxt(file);
+                        break;
+                    case ".ahk":
+                        CreateAutoHotkeyScript(file);
+                        break;
+                }
             }
         }
     }
-    
+
+    private void WriteSummariesToCsv(string path)
+    {
+        using (var sw = new StreamWriter(path))
+        {
+            sw.WriteLine("gen;bestFn;AvgFn");
+            foreach (var s in GenerationSummaries)
+                sw.WriteLine("{0};{1};{2}", s.IdPokolenia, s.BestFitness, s.AvgFitness);
+        }
+    }
+
+    private void WriteResultsToTxt(string path)
+    {
+        using (var sw = new StreamWriter(path))
+        {
+            sw.WriteLine("KlawiaturaGAvalonia Results for run {0} ", DateTime.Now);
+            sw.WriteLine("\n===================================================================");
+            sw.WriteLine("\n\tSETTINGS:");
+            sw.WriteLine("\n1) POPULATION:");
+            sw.Write(" size: \t\t\t{0}\n children per parent: \t{1}\n", Settings.popSize,Settings.childNumber+1);
+            sw.WriteLine("\n2) CARRY-OVER:");
+            sw.Write(" carry-over mode: \t{0}\n carry-over ratio (%): \t{1}\n ", CarryModes[Settings.carryoverType], Settings.carryVar);
+            sw.Write("culling: \t\t{0}\n culling ratio (%): \t{1}\n",Settings.culling,Settings.cullingRate);
+            sw.WriteLine("\n3) SELECTION, CROSSOVER:");
+            sw.Write("selection algorithm: \t{0}\n selection pressure \t{1}\n crossover operator: \t{2}\n", 
+                SelectionAlgorithms[Settings.currSel], Settings.SelPressure, CrossoverAlgorithms[Settings.currX]);
+            sw.WriteLine("\n4) MUTATION:");
+            sw.Write(" mutation type: \t{0}\n mutation chance: \t{1}\n mutation severity: \t{2}\n",
+                MutationAlgorithms[Settings.currMut],Settings.mutChance,Settings.mutSeverity);
+            sw.WriteLine("\n5) BEHAVIOUR:");
+            sw.Write(" stop after {0}: \t{1}\n FullMemory: \t\t{2}\n", (Settings.currStopMode)?"gen ":"eps < ",
+                (Settings.currStopMode)?Settings.gensToRun:Settings.epsToStopAt,Settings.fullMemory);
+            sw.WriteLine("===================================================================");
+            sw.WriteLine("\nRESULTS:");
+            sw.WriteLine("GEN\t|\tBEST\t|\tAVG"+(Settings.fullMemory?"\t|\tBestExample":""));
+            var len = GenerationSummaries.Count;
+            for (int i = 0; i < len; i++)
+            {
+                sw.Write("{0}\t|\t{1}\t|\t{2}",GenerationSummaries[i].IdPokolenia,
+                    Math.Round(GenerationSummaries[i].BestFitness,5),Math.Round(GenerationSummaries[i].AvgFitness,5));
+                if(Settings.fullMemory)
+                    sw.Write("\t|\t"+AllGenerations[i][0].layout);
+                sw.WriteLine();
+            }
+            sw.WriteLine("===================================================================");
+        }
+    }
+
+    private void CreateAutoHotkeyScript(string path)
+    {
+        using (var sw = new StreamWriter(path))
+        {
+            string[][] qwerty =
+            {
+                new[] { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "leftbracket", "rightbracket" },
+                new[] { "a", "s", "d", "f", "g", "h", "j", "k", "l", "semicolon", "'" },
+                new[] { "z", "x", "c", "v", "b", "n", "m", "comma", "period", "slash" }
+            };
+            sw.Write("#NoEnv\nSendMode Input\nSetWorkingDir %A_ScriptDir%\n\n");
+            sw.WriteLine("; Define key mappings");
+            for (int i = 0; i < 3; i++)
+            {
+                var rowlen = qwerty[i].Length;
+                for (int k = 0; k < rowlen; k++)
+                {
+                    sw.WriteLine("{0}::{1}",qwerty[i][k],AutoHotkeyPrep(CurrentLayout[i][k]));
+                }
+            }
+            sw.WriteLine("\n; Disable Caps Lock key\nCapsLock::Return");
+        }
+    }
+
+    private string AutoHotkeyPrep(string input)
+    {
+        if (input.All(x => char.IsLetter(x)))
+        {
+            return input.ToLower();
+        }
+        switch (input)
+        {
+            case "[":
+                return "leftbracket";
+            case "]":
+                return "rightbracket";
+            case ";":
+                return "semicolon";
+            case "'":
+                return "'";
+            case ",":
+                return "comma";
+            case ".":
+                return "period";
+            case "?":
+                return "slash";
+        }
+
+        return "<AhPrep error: string was" + input +">";
+    }
+
 /*
     public void CreateAhScript()
     {
@@ -373,7 +490,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             FitnessGraph window2 = new FitnessGraph();
             window2.Show();
-        }
+        };
     }
 
     public class DPoint
