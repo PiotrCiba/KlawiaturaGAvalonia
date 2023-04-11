@@ -3,6 +3,7 @@
              xmlns:local="using:KlawiaturaGAvalonia"
              xmlns:viewModels="clr-namespace:KlawiaturaGAvalonia.ViewModels"
              x:Class="KlawiaturaGAvalonia.App">
+    
     <Application.DataContext>
         <viewModels:MainWindowViewModel/>
     </Application.DataContext>

@@ -19,7 +19,10 @@ public class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                //DataContext = new MainWindowViewModel()
+                //{
+                //    _window = desktop.MainWindow,
+                //},
             };
         }
 

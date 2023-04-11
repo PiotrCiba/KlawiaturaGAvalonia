@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
+using ReactiveUI;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Shapes;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -27,12 +33,11 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
+    public Window? _window { get; set; }
+
     //default constructor
     public MainWindowViewModel()
     {
-        _summaries = new List<Summary>();
-        _currgen = new List<Chromosom>();
-        ChangeLayoutSelection();
     }
 
     //Colour fields
@@ -95,7 +100,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    private List<Summary> _summaries;
+    private List<Summary> _summaries = new List<Summary>();
 
     public List<Summary> GenerationSummaries
     {
@@ -314,7 +319,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (CurrSelGeneration >= 0)
         {
             CurrentGeneration = AllGenerations[CurrSelGeneration].ToList();
-            OnPropertyChanged(nameof(CurrentGeneration));
+            OnPropertyChanged(nameof(CurrentGeneration)) ;
             OnChromosomeSelectionChanged();
         }
     }
@@ -336,25 +341,29 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     //Save button behaviour
 
-    public void SaveButtonClick()
+    public async void SaveBtn()
     {
-        if (GenerationSummaries.Count > 0)
+        var svdlg = new SaveFileDialog();
+        if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            SaveWindow save = new SaveWindow();
-            save.Show();
+            svdlg.InitialFileName = "result.csv";
+            svdlg.Directory = "C:/";
+            var file = await svdlg.ShowAsync(desktop.MainWindow);
+            Debug.WriteLine(file);
+            if (file != null)
+            {
+
+            }
         }
     }
-
-    public void SaveCSV()
-    {
-        Console.Write("saving scv");
-    }
-
+    
+/*
     public void CreateAhScript()
     {
         Console.Write("making autohotkey");
     }
-    
+*/  
+
     //graph
 
     public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
