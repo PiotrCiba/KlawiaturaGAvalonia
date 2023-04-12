@@ -473,16 +473,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
         return "<AhPrep error: string was" + input +">";
     }
-
-/*
-    public void CreateAhScript()
-    {
-        Console.Write("making autohotkey");
-    }
-*/  
+    
+    //ToDo: if the different fitness functions are implemented, add an option to spit out a txt import file for patorjk.com
 
     //graph
 
+    //todo: have a working graph display, that shows how the fitness score of each generation changes
     public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
     public void DisplayGraph()
     {
@@ -499,3 +495,4 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         public double fit { get; set; }
     }
 }
+

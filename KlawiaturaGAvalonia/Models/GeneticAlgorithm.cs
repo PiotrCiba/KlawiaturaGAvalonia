@@ -7,6 +7,8 @@ namespace KlawiaturaGAvalonia.Models
     public class GeneticAlgorithm
     {
         //Piotr Ciba
+        
+        //ToDo: an expanded Fn selection class, with a simple Workman, expanded Workman (from workmanlayout.org) and maybe the grading system from patorjk.com, with various literature to check against
 
         /*
                 snew double[] { 4, 2, 2, 3, 4, 5, 3, 2, 2, 4, 4, 5 },
