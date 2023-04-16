@@ -4677,19 +4677,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ibm\\.nuget\\packages\\": {}
+    "C:\\Users\\pi0tr\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
+      "projectUniqueName": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
       "projectName": "KlawiaturaGAvalonia",
-      "projectPath": "D:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
-      "packagesPath": "C:\\Users\\ibm\\.nuget\\packages\\",
-      "outputPath": "D:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\obj\\",
+      "projectPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
+      "packagesPath": "C:\\Users\\pi0tr\\.nuget\\packages\\",
+      "outputPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ibm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pi0tr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4756,7 +4756,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

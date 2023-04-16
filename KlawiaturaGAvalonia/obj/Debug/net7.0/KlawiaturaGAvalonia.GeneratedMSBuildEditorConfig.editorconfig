@@ -12,16 +12,13 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = KlawiaturaGAvalonia
-build_property.ProjectDir = D:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\
+build_property.ProjectDir = C:\_STUDIA\P4\KlawiaturaGAvalonia\KlawiaturaGAvalonia\
 
-[D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/App.axaml]
+[C:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/FitnessGraph.axaml]
+[C:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/FitnessGraph.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/MainWindow.axaml]
-build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
-
-[D:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/SaveWindow.axaml]
+[C:/_STUDIA/P4/KlawiaturaGAvalonia/KlawiaturaGAvalonia/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
