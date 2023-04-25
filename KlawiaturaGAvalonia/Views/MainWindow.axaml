@@ -54,11 +54,19 @@
     </Window.Styles>
 
     <Grid>
+<<<<<<< Updated upstream
         <Grid.RowDefinitions>   <!--ToDo: modify rows to be 4,1,1,3 or something, to fit the fitness function section better -->
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
+=======
+        <Grid.RowDefinitions> 
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+>>>>>>> Stashed changes
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -67,6 +75,7 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Foreground="{Binding BorderColour}" Text="Klawiatura"/>
         <!--ToDo:[Maybe] Add a toggle that re-maps the keyboard to the currently selected one. maybe add a visualisation to change the colour of changed keys (maybe. maybe not)-->
+        <!--[Maybe] Add a toggle that re-maps the keyboard to the currently selected one. maybe add a visualisation to change the colour of changed keys (maybe. maybe not)-->
         <!-- Rectangle around the outside of the field containing the virtual keyboard-->
         <Border Classes="bb" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
 
@@ -333,8 +342,31 @@
         </Grid>
         
         <!-- Border around the GA settings section -->
+<<<<<<< Updated upstream
         <!--ToDo: add the fitness func. section, using an expander control modify this do it all fits properly-->
         
+=======
+        <Border Grid.Row="2" Grid.Column="0" Classes="bb">
+            <Expander Header="Funkcja dopasowania: Podstawowa" IsExpanded="False" ExpandDirection="Down">
+                <StackPanel Orientation="Horizontal" Spacing="3">
+                    <TextBlock Text="Fn() = " FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox/>
+                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox/>
+                    <TextBlock Text=" + " FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox/>
+                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox/>
+                    <TextBlock Text=" + " FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox/>
+                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox/>
+                    <TextBlock Text=" sprawdzone na: " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox Width="150"/>
+                </StackPanel>
+            </Expander>
+        </Border>
+>>>>>>> Stashed changes
         <Border Grid.Row="3" Grid.Column="0" Classes="bb"/>
         
         <Grid Grid.Row="3" Grid.Column="0" Margin="2,2,2,2">
