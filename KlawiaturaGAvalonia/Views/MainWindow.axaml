@@ -54,19 +54,11 @@
     </Window.Styles>
 
     <Grid>
-<<<<<<< Updated upstream
-        <Grid.RowDefinitions>   <!--ToDo: modify rows to be 4,1,1,3 or something, to fit the fitness function section better -->
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
-=======
         <Grid.RowDefinitions> 
             <RowDefinition Height="2*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
->>>>>>> Stashed changes
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -74,16 +66,15 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Foreground="{Binding BorderColour}" Text="Klawiatura"/>
-        <!--ToDo:[Maybe] Add a toggle that re-maps the keyboard to the currently selected one. maybe add a visualisation to change the colour of changed keys (maybe. maybe not)-->
         <!--[Maybe] Add a toggle that re-maps the keyboard to the currently selected one. maybe add a visualisation to change the colour of changed keys (maybe. maybe not)-->
         <!-- Rectangle around the outside of the field containing the virtual keyboard-->
-        <Border Classes="bb" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+        <Border Classes="bb" Grid.Column="0" Grid.Row="0" />
 
         <!-- Rectangle represening the edge of the keyboard -->
-        <Border Classes="bb" Margin="17,27,22,17" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/> 
+        <Border Classes="bb" Margin="17,27,22,17" Grid.Column="0" Grid.Row="0"/> 
                    
         <!-- Grid containing the keys of the keyboard -->
-        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="30,30,30,30">
+        <Grid Grid.Row="0" Grid.Column="0" Margin="30,30,30,30">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -299,10 +290,10 @@
         </Grid>
         
         <!-- Border surrounding the field with the evaluation of the selected keyboard layout -->
-        <Border Grid.Row="2" Grid.Column="0" Classes="bb" Margin="1,1,1,1"/>
+        <Border Grid.Row="1" Grid.Column="0" Classes="bb" Margin="1,1,1,1"/>
 
         <!-- Grid containing the evaluation of the currently displayed keyboard (default is qwerty, btw) -->
-        <Grid Grid.Row="2" Grid.Column="0" Margin="1,1,1,1">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="1,1,1,1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -342,10 +333,8 @@
         </Grid>
         
         <!-- Border around the GA settings section -->
-<<<<<<< Updated upstream
         <!--ToDo: add the fitness func. section, using an expander control modify this do it all fits properly-->
         
-=======
         <Border Grid.Row="2" Grid.Column="0" Classes="bb">
             <Expander Header="Funkcja dopasowania: Podstawowa" IsExpanded="False" ExpandDirection="Down">
                 <StackPanel Orientation="Horizontal" Spacing="3">
@@ -366,7 +355,6 @@
                 </StackPanel>
             </Expander>
         </Border>
->>>>>>> Stashed changes
         <Border Grid.Row="3" Grid.Column="0" Classes="bb"/>
         
         <Grid Grid.Row="3" Grid.Column="0" Margin="2,2,2,2">
@@ -509,7 +497,7 @@
         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,0,0" Foreground="Black" Text="Chromosomy"/>
         <DataGrid Grid.Column="1" Grid.Row="2"  Grid.RowSpan="2" Margin="5,25,5,5" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False"  Items="{Binding CurrentGeneration, Mode=TwoWay}" SelectedIndex="{Binding CurrSelChromosome}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="5*" Header="Fitness" Binding="{Binding fitness}"/>
+                <DataGridTextColumn Width="5*" Header="Fitness" Binding="{Binding  fitness}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
