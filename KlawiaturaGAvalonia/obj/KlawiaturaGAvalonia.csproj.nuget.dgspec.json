@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj": {}
+    "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj": {}
   },
   "projects": {
-    "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj": {
+    "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
+        "projectUniqueName": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
         "projectName": "KlawiaturaGAvalonia",
-        "projectPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
+        "projectPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
         "packagesPath": "C:\\Users\\pi0tr\\.nuget\\packages\\",
-        "outputPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\obj\\",
+        "outputPath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pi0tr\\AppData\\Roaming\\NuGet\\NuGet.Config",

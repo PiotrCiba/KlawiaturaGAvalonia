@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DKdQfJe+wV1EWBJyV8CS2NIPkTw3m+QMFWpws5s/97ds0OlYtQ04WYRvbTQdFokjBie5rVx/wAlJXbOzguftJg==",
+  "dgSpecHash": "5Hi+ib4N2yOzx6Serk0jzNuKtd512YYlELvrrNgHjFQrbgAl8fzeefUPTqzM1vShG3D/sJQtZiSSHUL43x7XDA==",
   "success": true,
-  "projectFilePath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
+  "projectFilePath": "C:\\_STUDIA\\P4\\KlawiaturaGAvalonia-master\\KlawiaturaGAvalonia\\KlawiaturaGAvalonia.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pi0tr\\.nuget\\packages\\avalonia\\0.10.19\\avalonia.0.10.19.nupkg.sha512",
     "C:\\Users\\pi0tr\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.0.2020091801\\avalonia.angle.windows.natives.2.1.0.2020091801.nupkg.sha512",
