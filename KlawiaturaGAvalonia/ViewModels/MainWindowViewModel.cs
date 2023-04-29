@@ -476,10 +476,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     
     //ToDo: if the different fitness functions are implemented, add an option to spit out a txt import file for patorjk.com
 
-    //graph
-
-    //todo: have a working graph display, that shows how the fitness score of each generation changes
-    public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
     public void DisplayGraph()
     {
         if (GenerationSummaries.Count>0)

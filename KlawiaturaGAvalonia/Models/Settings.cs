@@ -51,6 +51,7 @@
 
     public class FitnessSettings
     {
-        
+        //mode selection
+        public bool AdvancedMode = false;
     }
 }

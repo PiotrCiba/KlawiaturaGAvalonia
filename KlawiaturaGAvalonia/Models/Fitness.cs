@@ -7,7 +7,7 @@ public static class Fitness
     //ToDo: an expanded Fn selection class, with a simple Workman, expanded Workman (from workmanlayout.org) and maybe the grading system from patorjk.com, with various literature to check against
 
     //częstotliwości znaków w języku Angielskim
-    private static Dictionary<string, double> charFreq = new Dictionary<string, double>() {
+    private static Dictionary<string, double> charFreq = new() {
         {"A", 8.4966}, {"B", 2.0720}, {"C", 4.5388}, {"D", 3.3844}, {"E", 11.1607},
         {"F", 1.8121}, {"G", 2.4705}, {"H", 3.0034}, {"I", 7.5448}, {"J", 0.1965},
         {"K", 1.1016}, {"L", 5.4893}, {"M", 3.0129}, {"N", 6.6544}, {"O", 7.1635},
@@ -25,19 +25,24 @@ public static class Fitness
         new double[] { 4, 4, 3, 2, 4, 4, 2, 3, 4, 4 }
     };
     
-    public static double Fn(FitnessSettings Fs, string[][] input)
+    public static double Fn(FitnessSettings fs, string[][] input)
     {
         double sum = 0;
-
-        for (int i = 0; i < input.Length; i++)
+        if (!fs.AdvancedMode)
         {
-            for (int k = 0; k < input[i].Length; k++)
+            for (int i = 0; i < input.Length; i++)
             {
-                //sumowanie [koszt klawisza] * [częstotliwość znaku]
-                sum += koszt[i][k] * charFreq[input[i][k]];
+                for (int k = 0; k < input[i].Length; k++)
+                {
+                    //sumowanie [koszt klawisza] * [częstotliwość znaku]
+                    sum += koszt[i][k] * charFreq[input[i][k]];
+                }
             }
         }
-
+        else
+        {
+            //todo advanced FN calculations
+        }
         //zwracanie sumy
         return sum;
     }

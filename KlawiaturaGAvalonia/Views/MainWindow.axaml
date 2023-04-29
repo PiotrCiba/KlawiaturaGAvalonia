@@ -333,7 +333,6 @@
         </Grid>
         
         <!-- Border around the GA settings section -->
-        <!--ToDo: add the fitness func. section, using an expander control modify this do it all fits properly-->
         
         <Border Grid.Row="2" Grid.Column="0" Classes="bb">
             <Expander Header="Funkcja dopasowania: Podstawowa" IsExpanded="False" ExpandDirection="Down">
