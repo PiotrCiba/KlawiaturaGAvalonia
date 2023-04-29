@@ -7,32 +7,6 @@ namespace KlawiaturaGAvalonia.Models
     public class GeneticAlgorithm
     {
         //Piotr Ciba
-        
-        //ToDo: an expanded Fn selection class, with a simple Workman, expanded Workman (from workmanlayout.org) and maybe the grading system from patorjk.com, with various literature to check against
-
-        /*
-                snew double[] { 4, 2, 2, 3, 4, 5, 3, 2, 2, 4, 4, 5 },
-                new double[] { 1.5, 1, 1, 1, 3, 3, 1, 1, 1, 1.5, 3 },
-                new double[] { 4, 4, 3, 2, 5, 3, 2, 3, 4, 4 }
-         */
-        //częstotliwości znaków w języku Angielskim
-        private static Dictionary<string, double> charFreq = new Dictionary<string, double>() {
-                {"A", 8.4966}, {"B", 2.0720}, {"C", 4.5388}, {"D", 3.3844}, {"E", 11.1607},
-                {"F", 1.8121}, {"G", 2.4705}, {"H", 3.0034}, {"I", 7.5448}, {"J", 0.1965},
-                {"K", 1.1016}, {"L", 5.4893}, {"M", 3.0129}, {"N", 6.6544}, {"O", 7.1635},
-                {"P", 3.1671}, {"Q", 0.1962}, {"R", 7.5809}, {"S", 5.7351}, {"T", 6.9509},
-                {"U", 3.6308}, {"V", 1.0074}, {"W", 1.2899}, {"X", 0.2902}, {"Y", 1.7779},
-                {"Z", 0.2722},
-                {"[", 0.002}, {"]", 0.002}, {";", 0.0351}, {"-", 0.0252}, {"=", 0.0155},
-                {"'", 0.054}, {",", 0.13688}, {".", 0.14511}, {"?", 0.0644}
-            };
-
-        //koszty przycisków wg. metody ewaluacji Worksmana w układzie {12, 11, 10}
-        private static double[][] koszt = {
-                new double[] { 4, 2, 2, 3, 4, 4, 3, 2, 2, 4, 5, 5 },
-                new double[] { 1.5, 1, 1, 1, 3, 3, 1, 1, 1, 1.5, 3 },
-                new double[] { 4, 4, 3, 2, 4, 4, 2, 3, 4, 4 }
-        };
 
         public static (List<Summary>, List<Chromosom[]>) Start(Settings s, IProgress<int> progress)
         {
@@ -46,14 +20,14 @@ namespace KlawiaturaGAvalonia.Models
             List<Chromosom> parents = new List<Chromosom>();
 
             //prepping Parents, random scramble
-            for (int i = 0; i < s.popSize; i++)
+            for (int i = 0; i < s.Main.popSize; i++)
                 parents.Add(new Chromosom());
             parents = ScrambleParentsLayouts(parents);
 
             //calculating the Parents' fitness
             foreach (var p in parents)
             {
-                p.fitness = Fn(StringToLayout(p.layout));
+                p.fitness = Fitness.Fn(s.FitSet,StringToLayout(p.layout));
             }
 
             //sorting Parents by fitness
@@ -82,7 +56,7 @@ namespace KlawiaturaGAvalonia.Models
                 List<Chromosom> children = new List<Chromosom>();
 
                 //carryover-breedingPop from parents
-                (Chromosom[] carry, Chromosom[] breeders) carryAndPop = CarryModule.Select(parents, s.carryoverType, s.carryVar, s.culling, s.cullingRate);
+                (Chromosom[] carry, Chromosom[] breeders) carryAndPop = CarryModule.Select(parents, s.Repop.carryoverType, s.Repop.carryVar, s.Repop.culling, s.Repop.cullingRate);
 
                 //copy carry to children
                 foreach (var c in carryAndPop.carry)
@@ -91,20 +65,20 @@ namespace KlawiaturaGAvalonia.Models
                 }
 
                 //while children < parents
-                while (children.Count < s.popSize)
+                while (children.Count < s.Main.popSize)
                 {
                     //parentSelection, from breedingPop
-                    Chromosom[] couple = ParentSelection.Select(carryAndPop.breeders, s.currSel, s.SelPressure);
+                    Chromosom[] couple = ParentSelection.Select(carryAndPop.breeders, s.Repop.currSel, s.Repop.SelPressure);
 
                     //crossover operator, from selected parents
-                    Chromosom[] childrenTemp = CrossoverModule.Select(couple, s.currX, s.childNumber);
+                    Chromosom[] childrenTemp = CrossoverModule.Select(couple, s.Repop.currX, s.Repop.childNumber);
 
 
                     //iterate over newly born chlidren
-                    for (int i = 0; i <= s.childNumber; i++)
+                    for (int i = 0; i <= s.Repop.childNumber; i++)
                     {
                         //mutationModule, may hit, may not hit
-                        childrenTemp[i] = MutationModule.Select(childrenTemp[i], s.currMut, s.mutChance, s.mutSeverity);
+                        childrenTemp[i] = MutationModule.Select(childrenTemp[i], s.Repop.currMut, s.Repop.mutChance, s.Repop.mutSeverity);
                         //add new chlidren to children
                         children.Add(childrenTemp[i]);
                     }
@@ -114,13 +88,13 @@ namespace KlawiaturaGAvalonia.Models
                 foreach (var c in children)
                 {
                     if (c.fitness == 0)
-                        c.fitness = Fn(StringToLayout(c.layout));
+                        c.fitness = Fitness.Fn(s.FitSet,StringToLayout(c.layout));
                 }
                 //sort ascending
                 children = (from c in children orderby c.fitness ascending select c).ToList();
 
                 //if children overflow, cull the lowest fitness one
-                while (children.Count > s.popSize)
+                while (children.Count > s.Main.popSize)
                 {
                     children.Remove(children.Last());
                 }
@@ -129,7 +103,7 @@ namespace KlawiaturaGAvalonia.Models
                 parents = children.OrderBy(o => o.fitness).ToList();
 
                 //if fullmemory, add children to Pokolenia
-                if (s.fullMemory)
+                if (s.Main.fullMemory)
                 {
                     pokolenia.Add(parents.ToArray());
                 }
@@ -140,13 +114,13 @@ namespace KlawiaturaGAvalonia.Models
 
                 int report = 0;
 
-                if (s.currStopMode)
+                if (s.Main.currStopMode)
                 {
                     //update the progress for progressbar
-                    report = (int)((double)gen / s.gensToRun * 100);
+                    report = (int)((double)gen / s.Main.gensToRun * 100);
 
                     //gens to run mode
-                    if (gen >= s.gensToRun)
+                    if (gen >= s.Main.gensToRun)
                     {
                         breakCondition = true;
                     }
@@ -157,11 +131,11 @@ namespace KlawiaturaGAvalonia.Models
                     Summary[] temp = genSummaries.TakeLast(2).ToArray();
                     double currentEps = (temp[0].BestFitness - temp[1].BestFitness) / temp[1].BestFitness;
                     //calculate the report
-                    report = (int)((s.epsToStopAt / currentEps) * 100);
+                    report = (int)((s.Main.epsToStopAt / currentEps) * 100);
                     if (report < 0)
                         report = 0;
 
-                    if (currentEps <= s.epsToStopAt)
+                    if (currentEps <= s.Main.epsToStopAt)
                     {
                         //the set improvement has to keep at it for ~10 rounds before stopping
                         if (gensToMaintainEps == 0)
@@ -181,23 +155,6 @@ namespace KlawiaturaGAvalonia.Models
 
             //return the results of the algorithm
             return (genSummaries, pokolenia);
-        }
-
-        public static double Fn(string[][] input)
-        {
-            double sum = 0;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                for (int k = 0; k < input[i].Length; k++)
-                {
-                    //sumowanie [koszt klawisza] * [częstotliwość znaku]
-                    sum += koszt[i][k] * charFreq[input[i][k]];
-                }
-            }
-
-            //zwracanie sumy
-            return sum;
         }
 
         /*                     0  1  2  3  4  5  6  7  8  9  10  11

@@ -399,11 +399,11 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Classes="TB" Text="{Binding Settings.popSize}"/>
-                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding ChildNumbers}" SelectedIndex="{Binding Settings.childNumber}"/>
-                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding CarryModes}" SelectedIndex="{Binding Settings.carryoverType}"/>
-                <TextBox Grid.Row="3" Classes="TB" Text="{Binding Settings.carryVar}"/>
-                <TextBox Grid.Row="4" Classes="TB" Text="{Binding Settings.cullingRate}"/>
+                <TextBox Grid.Row="0" Classes="TB" Text="{Binding Settings.Main.popSize}"/>
+                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding ChildNumbers}" SelectedIndex="{Binding Settings.Repop.childNumber}"/>
+                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding CarryModes}" SelectedIndex="{Binding Settings.Repop.carryoverType}"/>
+                <TextBox Grid.Row="3" Classes="TB" Text="{Binding Settings.Repop.carryVar}"/>
+                <TextBox Grid.Row="4" Classes="TB" Text="{Binding Settings.Repop.cullingRate}"/>
             </Grid>
 
             <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
@@ -436,12 +436,12 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ComboBox Grid.Row="0" Classes="CB" Items="{Binding SelectionAlgorithms}" SelectedIndex="{Binding Settings.currSel}"/>
-                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding CrossoverAlgorithms}" SelectedIndex="{Binding Settings.currX}"/>
-                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding MutationAlgorithms}" SelectedIndex="{Binding Settings.currMut}"/>
-                <TextBox Grid.Row="3" Classes="CB" Text="{Binding Settings.SelPressure}"/>
-                <TextBox Grid.Row="4" Classes="CB" Text="{Binding Settings.mutChance}"/>
-                <TextBox Grid.Row="5" Classes="CB" Text="{Binding Settings.mutSeverity}"/>
+                <ComboBox Grid.Row="0" Classes="CB" Items="{Binding SelectionAlgorithms}" SelectedIndex="{Binding Settings.Repop.currSel}"/>
+                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding CrossoverAlgorithms}" SelectedIndex="{Binding Settings.Repop.currX}"/>
+                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding MutationAlgorithms}" SelectedIndex="{Binding Settings.Repop.currMut}"/>
+                <TextBox Grid.Row="3" Classes="CB" Text="{Binding Settings.Repop.SelPressure}"/>
+                <TextBox Grid.Row="4" Classes="CB" Text="{Binding Settings.Repop.mutChance}"/>
+                <TextBox Grid.Row="5" Classes="CB" Text="{Binding Settings.Repop.mutSeverity}"/>
             </Grid>
 
             <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
@@ -458,9 +458,9 @@
                     <RowDefinition Height="2.5*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Classes="Txt" Text="Zatrzymaj po:"/>
-                <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="{Binding Settings.currStopMode}" Content="pokoleniach"/>
+                <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="{Binding Settings.Main.currStopMode}" Content="pokoleniach"/>
                 <RadioButton Grid.Row="2" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" Content="poprawa &lt;"/>
-                <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="{Binding Settings.fullMemory}"/>
+                <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="{Binding Settings.Main.fullMemory}"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="5" Margin="1,1,1,1">
@@ -471,8 +471,8 @@
                     <RowDefinition Height="3.4*"/>
                     <RowDefinition Height="3.4*"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="1" Classes="TB" Text="{Binding Settings.gensToRun}"/>
-                <TextBox Grid.Row="2" Classes="TB" Text="{Binding Settings.epsToStopAt}"/>
+                <TextBox Grid.Row="1" Classes="TB" Text="{Binding Settings.Main.gensToRun}"/>
+                <TextBox Grid.Row="2" Classes="TB" Text="{Binding Settings.Main.epsToStopAt}"/>
                 <Button Grid.Row="3" Margin="2" Content="Zapisz" Command="{Binding SaveBtn}"/>
                 <Button Grid.Row="4" Margin="2" Content="Start" Command="{Binding OnStartButtonClick}"/>
             </Grid>

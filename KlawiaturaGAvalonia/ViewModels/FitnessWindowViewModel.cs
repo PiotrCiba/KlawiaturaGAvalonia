@@ -1,9 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Avalonia.Controls.Shapes;
+using Avalonia.Media;
 using DynamicData;
 using KlawiaturaGAvalonia.Models;
 using OxyPlot;
-using OxyPlot.Axes;
+using OxyPlot.Avalonia;
 
 namespace KlawiaturaGAvalonia.ViewModels;
 
@@ -11,8 +15,8 @@ public class FitnessWindowViewModel : ViewModelBase
 {
     public string PrimaryColour { get; set; } = "White";
     
-    private IList<DataPoint> _bestFitPoints = new List<DataPoint>();
-    private IList<DataPoint> _avgFitPoints = new List<DataPoint>();
+    private IList<DataPoint> bestFitPoints = new List<DataPoint>();
+    private IList<DataPoint> avgFitPoints = new List<DataPoint>();
 
     public PlotModel PlotModel { get; private set; }
     public OxyPlot.Series.LineSeries BestFitLineSeries { get; private set; }
@@ -22,23 +26,23 @@ public class FitnessWindowViewModel : ViewModelBase
         PlotModel = new PlotModel { Title = "Fitness plot, Best vs Avg" };
         BestFitLineSeries = new OxyPlot.Series.LineSeries();
         AvgFitLineSeries = new OxyPlot.Series.LineSeries();
-        foreach (var s in inputData)
-        {
-            _bestFitPoints.Add(new DataPoint(s.IdPokolenia,s.BestFitness));
-            _avgFitPoints.Add(new DataPoint(s.IdPokolenia,s.AvgFitness));
-        }
-
-        BestFitLineSeries.Title = "Best Fitness";
-        BestFitLineSeries.Points.Clear();
-        BestFitLineSeries.Points.AddRange(_bestFitPoints);
-        
-        AvgFitLineSeries.Title = "Average Fitness";
-        AvgFitLineSeries.Points.Clear();
-        AvgFitLineSeries.Points.AddRange(_avgFitPoints);
-            
         PlotModel.Series.Add(BestFitLineSeries);
         PlotModel.Series.Add(AvgFitLineSeries);
-        
+        foreach (var s in inputData)
+        {
+            bestFitPoints.Add(new DataPoint(s.IdPokolenia,s.BestFitness));
+            avgFitPoints.Add(new DataPoint(s.IdPokolenia,s.AvgFitness));
+        }
+        lock (bestFitPoints)
+        {
+            BestFitLineSeries.Points.Clear();
+            BestFitLineSeries.Points.AddRange(bestFitPoints);
+        }
+        lock (avgFitPoints)
+        {
+            AvgFitLineSeries.Points.Clear();
+            AvgFitLineSeries.Points.AddRange(avgFitPoints);
+        }
         PlotModel.InvalidatePlot(true);
     }
     public FitnessWindowViewModel()
@@ -46,8 +50,8 @@ public class FitnessWindowViewModel : ViewModelBase
         PlotModel = new PlotModel { Title = "Empty plot constructor" };
         BestFitLineSeries = new OxyPlot.Series.LineSeries();
         AvgFitLineSeries = new OxyPlot.Series.LineSeries();
-        _bestFitPoints.Add(new DataPoint(0,0));
-        _avgFitPoints.Add(new DataPoint(0,0));
+        bestFitPoints.Add(new DataPoint(0,0));
+        avgFitPoints.Add(new DataPoint(0,0));
         PlotModel.Series.Add(BestFitLineSeries);
     }
 }
