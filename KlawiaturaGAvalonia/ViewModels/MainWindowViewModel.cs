@@ -296,12 +296,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         AllGenerations = new List<Chromosom[]>(output.Item2);
         CurrentGeneration = AllGenerations.Last().ToList();
 
-        //for ShowGraph, let's try something like this...
-        datapoints = new Collection<DPoint>();
-        foreach (var s in GenerationSummaries)
-            datapoints.Add(new DPoint { gen = s.IdPokolenia, fit = s.BestFitness });
-        OnPropertyChanged(nameof(datapoints));
-
         OnPropertyChanged(nameof(GenerationSummaries));
         OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(CurrSelGeneration));
@@ -483,12 +477,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             FitnessGraph window2 = new FitnessGraph(GenerationSummaries);
             window2.Show();
         };
-    }
-
-    public class DPoint
-    {
-        public int gen { get; set; }
-        public double fit { get; set; }
     }
 }
 

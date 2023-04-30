@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
+using Avalonia.Controls;
+using Microsoft.Win32.SafeHandles;
 
 namespace KlawiaturaGAvalonia.Models;
 
@@ -21,7 +24,7 @@ public static class Fitness
     //koszty przycisków wg. metody ewaluacji Worksmana w układzie {12, 11, 10}
     private static double[][] koszt = {
         new double[] { 4, 2, 2, 3, 4, 4, 3, 2, 2, 4, 5, 5 },
-        new double[] { 1.5, 1, 1, 1, 3, 3, 1, 1, 1, 1.5, 3 },
+        new [] { 1.5, 1, 1, 1, 3, 3, 1, 1, 1, 1.5, 3 },
         new double[] { 4, 4, 3, 2, 4, 4, 2, 3, 4, 4 }
     };
     
@@ -45,5 +48,68 @@ public static class Fitness
         }
         //zwracanie sumy
         return sum;
+    }
+
+    static (int r, int c) CharToPos(string layout, char x)
+    {
+        int pos = layout.IndexOf(x);
+        if (pos >= 0 && pos < layout.Length)
+        {
+            if (pos >= 23)
+                return (2,pos - 23);
+            if (pos < 12)
+                return (0, pos);
+            return (1, pos - 12);
+        }
+        return (-1, -1);
+    }
+
+    class AlternatingHandUsage
+    {
+        private string _leftChars="";
+        private bool leftright;
+        private char previous;
+
+        private int sameHand=0;
+        private int diffHand=0;
+
+        public AlternatingHandUsage(string layout)
+        {
+            string[] temp = new string[3];
+            temp[0] = layout.Substring(0, 5);
+            temp[1] = layout.Substring(12, 5);
+            temp[2] = layout.Substring(23, 5);
+            _leftChars = temp[0] + temp[1] + temp[2];
+        }
+
+        public void NextLetter(char x)
+        {
+            if (previous == null)
+            {
+                if (!_leftChars.Contains(x))
+                    leftright = true;
+                previous = x;
+            }
+            else
+            {
+                if (previous == x)
+                    sameHand++;
+                else
+                {
+                    if (_leftChars.Contains(x)){
+                        if (leftright)
+                            sameHand++;
+                        else
+                            diffHand++;
+                    }else {
+                        if (leftright)
+                            diffHand++;
+                        else
+                            sameHand++;
+                    }
+                }
+            }
+        }
+        
     }
 }
