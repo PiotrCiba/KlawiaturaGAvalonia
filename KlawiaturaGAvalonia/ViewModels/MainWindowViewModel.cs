@@ -264,7 +264,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (SelectedLayout >= 0)
         {
             SelectedLayoutName = Layouts[SelectedLayout];
-            CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+            CurrentLayoutFitness = Fitness.Fn(Settings.FitSet,CurrentLayout);
             CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
             OnPropertyChanged(nameof(CurrentLayout));
             OnPropertyChanged(nameof(SelectedLayoutName));
@@ -296,12 +296,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         AllGenerations = new List<Chromosom[]>(output.Item2);
         CurrentGeneration = AllGenerations.Last().ToList();
 
-        //for ShowGraph, let's try something like this...
-        datapoints = new Collection<DPoint>();
-        foreach (var s in GenerationSummaries)
-            datapoints.Add(new DPoint { gen = s.IdPokolenia, fit = s.BestFitness });
-        OnPropertyChanged(nameof(datapoints));
-
         OnPropertyChanged(nameof(GenerationSummaries));
         OnPropertyChanged(nameof(AllGenerations));
         OnPropertyChanged(nameof(CurrSelGeneration));
@@ -331,7 +325,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
             CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
-            CurrentLayoutFitness = GeneticAlgorithm.Fn(CurrentLayout);
+            CurrentLayoutFitness = Fitness.Fn(Settings.FitSet, CurrentLayout);
             CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
             OnPropertyChanged(nameof(CurrentLayout));
             OnPropertyChanged(nameof(SelectedLayoutName));
@@ -394,28 +388,28 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             sw.WriteLine("\n===================================================================");
             sw.WriteLine("\n\tSETTINGS:");
             sw.WriteLine("\n1) POPULATION:");
-            sw.Write(" size: \t\t\t{0}\n children per parent: \t{1}\n", Settings.popSize,Settings.childNumber+1);
+            sw.Write(" size: \t\t\t{0}\n children per parent: \t{1}\n", Settings.Main.popSize,Settings.Repop.childNumber+1);
             sw.WriteLine("\n2) CARRY-OVER:");
-            sw.Write(" carry-over mode: \t{0}\n carry-over ratio (%): \t{1}\n ", CarryModes[Settings.carryoverType], Settings.carryVar);
-            sw.Write("culling: \t\t{0}\n culling ratio (%): \t{1}\n",Settings.culling,Settings.cullingRate);
+            sw.Write(" carry-over mode: \t{0}\n carry-over ratio (%): \t{1}\n ", CarryModes[Settings.Repop.carryoverType], Settings.Repop.carryVar);
+            sw.Write("culling: \t\t{0}\n culling ratio (%): \t{1}\n",Settings.Repop.culling,Settings.Repop.cullingRate);
             sw.WriteLine("\n3) SELECTION, CROSSOVER:");
             sw.Write("selection algorithm: \t{0}\n selection pressure \t{1}\n crossover operator: \t{2}\n", 
-                SelectionAlgorithms[Settings.currSel], Settings.SelPressure, CrossoverAlgorithms[Settings.currX]);
+                SelectionAlgorithms[Settings.Repop.currSel], Settings.Repop.SelPressure, CrossoverAlgorithms[Settings.Repop.currX]);
             sw.WriteLine("\n4) MUTATION:");
             sw.Write(" mutation type: \t{0}\n mutation chance: \t{1}\n mutation severity: \t{2}\n",
-                MutationAlgorithms[Settings.currMut],Settings.mutChance,Settings.mutSeverity);
+                MutationAlgorithms[Settings.Repop.currMut],Settings.Repop.mutChance,Settings.Repop.mutSeverity);
             sw.WriteLine("\n5) BEHAVIOUR:");
-            sw.Write(" stop after {0}: \t{1}\n FullMemory: \t\t{2}\n", (Settings.currStopMode)?"gen ":"eps < ",
-                (Settings.currStopMode)?Settings.gensToRun:Settings.epsToStopAt,Settings.fullMemory);
+            sw.Write(" stop after {0}: \t{1}\n FullMemory: \t\t{2}\n", (Settings.Main.currStopMode)?"gen ":"eps < ",
+                (Settings.Main.currStopMode)?Settings.Main.gensToRun:Settings.Main.epsToStopAt,Settings.Main.fullMemory);
             sw.WriteLine("===================================================================");
             sw.WriteLine("\nRESULTS:");
-            sw.WriteLine("GEN\t|\tBEST\t|\tAVG"+(Settings.fullMemory?"\t|\tBestExample":""));
+            sw.WriteLine("GEN\t|\tBEST\t|\tAVG"+(Settings.Main.fullMemory?"\t|\tBestExample":""));
             var len = GenerationSummaries.Count;
             for (int i = 0; i < len; i++)
             {
                 sw.Write("{0}\t|\t{1}\t|\t{2}",GenerationSummaries[i].IdPokolenia,
                     Math.Round(GenerationSummaries[i].BestFitness,5),Math.Round(GenerationSummaries[i].AvgFitness,5));
-                if(Settings.fullMemory)
+                if(Settings.Main.fullMemory)
                     sw.Write("\t|\t"+AllGenerations[i][0].layout);
                 sw.WriteLine();
             }
@@ -476,7 +470,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     
     //ToDo: if the different fitness functions are implemented, add an option to spit out a txt import file for patorjk.com
 
-    public Collection<DPoint> datapoints { get; set; } = new Collection<DPoint>();
     public void DisplayGraph()
     {
         if (GenerationSummaries.Count>0)
@@ -484,12 +477,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             FitnessGraph window2 = new FitnessGraph(GenerationSummaries);
             window2.Show();
         };
-    }
-
-    public class DPoint
-    {
-        public int gen { get; set; }
-        public double fit { get; set; }
     }
 }
 
