@@ -55,10 +55,10 @@
 
     <Grid>
         <Grid.RowDefinitions> 
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="3.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -335,22 +335,22 @@
         <!-- Border around the GA settings section -->
         
         <Border Grid.Row="2" Grid.Column="0" Classes="bb">
-            <Expander Header="Funkcja dopasowania: Podstawowa" IsExpanded="False" ExpandDirection="Down">
+            <Expander Header="{Binding FitnessType}" IsExpanded="{Binding IsAdvancedOpened}" ExpandDirection="Down">
                 <StackPanel Orientation="Horizontal" Spacing="3">
                     <TextBlock Text="Fn() = " FontSize="20" VerticalAlignment="Center"/>
-                    <TextBox/>
-                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
-                    <ComboBox/>
+                    <TextBox Text="{Binding CurrSettings.FitSet.firstVal}" Width="75"/>
+                    <TextBlock Text="* " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox Items="{Binding CurrSettings.FitSet.first}" SelectedIndex="{Binding CurrSettings.FitSet.firstindex}" Width="75"/>
                     <TextBlock Text=" + " FontSize="20" VerticalAlignment="Center"/>
-                    <TextBox/>
-                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
-                    <ComboBox/>
+                    <TextBox Text="{Binding CurrSettings.FitSet.secondVal}" Width="75"/>
+                    <TextBlock Text="* " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox Items="{Binding CurrSettings.FitSet.second}" SelectedIndex="{Binding CurrSettings.FitSet.secondindex}" Width="75"/>
                     <TextBlock Text=" + " FontSize="20" VerticalAlignment="Center"/>
-                    <TextBox/>
-                    <TextBlock Text="% " FontSize="20" VerticalAlignment="Center"/>
-                    <ComboBox/>
+                    <TextBox Text="{Binding CurrSettings.FitSet.thirdVal}" Width="75"/>
+                    <TextBlock Text="* " FontSize="20" VerticalAlignment="Center"/>
+                    <ComboBox Items="{Binding CurrSettings.FitSet.third}" SelectedIndex="{Binding CurrSettings.FitSet.thirdindex}" Width="75"/>
                     <TextBlock Text=" sprawdzone na: " FontSize="20" VerticalAlignment="Center"/>
-                    <ComboBox Width="150"/>
+                    <ComboBox Items="{Binding CurrSettings.FitSet.filenames}" SelectedIndex="{Binding CurrSettings.FitSet.selectedbookindex}" Width="150"/>
                 </StackPanel>
             </Expander>
         </Border>
@@ -371,11 +371,26 @@
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Classes="bb">
                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="Ustawienia Populacji" FontSize="15"/>
             </Border>
-            
-            <Grid Grid.Row="1" Grid.Column="0">
+            <Border Grid.Row="1" Grid.Column="0" Classes="bb">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Liczebność:"/>
+                    <TextBlock Grid.Row="1" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ilość dzieci:"/>
+                    <TextBlock Grid.Row="2" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Carry-over:"/>
+                    <TextBlock Grid.Row="3" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="CO variable:"/>
+                    <CheckBox Grid.Row="4" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Content="Culling (%):"/>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1" Grid.Column="1"  Margin="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -383,48 +398,35 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Liczebność:"/>
-                <TextBlock Grid.Row="1" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ilość dzieci:"/>
-                <TextBlock Grid.Row="2" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Carry-over:"/>
-                <TextBlock Grid.Row="3" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Center" Text="CO variable:"/>
-                <CheckBox Grid.Row="4" Classes="Txt" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Content="Culling (%):"/>
+                <TextBox Grid.Row="0" Classes="TB" Text="{Binding CurrSettings.Main.popSize}"/>
+                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding ChildNumbers}" SelectedIndex="{Binding CurrSettings.Repop.childNumber}"/>
+                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding CarryModes}" SelectedIndex="{Binding CurrSettings.Repop.carryoverType}"/>
+                <TextBox Grid.Row="3" Classes="TB" Text="{Binding CurrSettings.Repop.carryVar}"/>
+                <TextBox Grid.Row="4" Classes="TB" Text="{Binding CurrSettings.Repop.cullingRate}"/>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1" Margin="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Classes="TB" Text="{Binding Settings.Main.popSize}"/>
-                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding ChildNumbers}" SelectedIndex="{Binding Settings.Repop.childNumber}"/>
-                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding CarryModes}" SelectedIndex="{Binding Settings.Repop.carryoverType}"/>
-                <TextBox Grid.Row="3" Classes="TB" Text="{Binding Settings.Repop.carryVar}"/>
-                <TextBox Grid.Row="4" Classes="TB" Text="{Binding Settings.Repop.cullingRate}"/>
-            </Grid>
-
-            <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+            <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Classes="bb">
                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="Ustawienia Rozrodu" FontSize="15"/>
             </Border>
             
-            <Grid Grid.Row="1" Grid.Column="2" Margin="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Classes="Txt" Text="Alg. wyboru:"/>
-                <TextBlock Grid.Row="1" Classes="Txt" Text="Alg. krzyżowania:"/>
-                <TextBlock Grid.Row="2" Classes="Txt" Text="Rodzaj mutacji:"/>
-                <TextBlock Grid.Row="3" Classes="Txt" Text="Sel. Pressure:"/>
-                <TextBlock Grid.Row="4" Classes="Txt" Text="Szansa mutacji:"/>
-                <TextBlock Grid.Row="5" Classes="Txt" Text="Rozległość:"/>
-            </Grid>
+            <Border Grid.Row="1" Grid.Column="2" Classes="bb">
+                <Grid  Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Classes="Txt" Text="Alg. wyboru:"/>
+                    <TextBlock Grid.Row="1" Classes="Txt" Text="Alg. krzyżowania:"/>
+                    <TextBlock Grid.Row="2" Classes="Txt" Text="Rodzaj mutacji:"/>
+                    <TextBlock Grid.Row="3" Classes="Txt" Text="Sel. Pressure:"/>
+                    <TextBlock Grid.Row="4" Classes="Txt" Text="Szansa mutacji:"/>
+                    <TextBlock Grid.Row="5" Classes="Txt" Text="Rozległość:"/>
+                </Grid>
+            </Border>
 
             <Grid Grid.Row="1" Grid.Column="3" Margin="2">
                 <Grid.RowDefinitions>
@@ -435,33 +437,34 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ComboBox Grid.Row="0" Classes="CB" Items="{Binding SelectionAlgorithms}" SelectedIndex="{Binding Settings.Repop.currSel}"/>
-                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding CrossoverAlgorithms}" SelectedIndex="{Binding Settings.Repop.currX}"/>
-                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding MutationAlgorithms}" SelectedIndex="{Binding Settings.Repop.currMut}"/>
-                <TextBox Grid.Row="3" Classes="CB" Text="{Binding Settings.Repop.SelPressure}"/>
-                <TextBox Grid.Row="4" Classes="CB" Text="{Binding Settings.Repop.mutChance}"/>
-                <TextBox Grid.Row="5" Classes="CB" Text="{Binding Settings.Repop.mutSeverity}"/>
+                <ComboBox Grid.Row="0" Classes="CB" Items="{Binding SelectionAlgorithms}" SelectedIndex="{Binding CurrSettings.Repop.currSel}"/>
+                <ComboBox Grid.Row="1" Classes="CB" Items="{Binding CrossoverAlgorithms}" SelectedIndex="{Binding CurrSettings.Repop.currX}"/>
+                <ComboBox Grid.Row="2" Classes="CB" Items="{Binding MutationAlgorithms}" SelectedIndex="{Binding CurrSettings.Repop.currMut}"/>
+                <TextBox Grid.Row="3" Classes="CB" Text="{Binding CurrSettings.Repop.SelPressure}"/>
+                <TextBox Grid.Row="4" Classes="CB" Text="{Binding CurrSettings.Repop.mutChance}"/>
+                <TextBox Grid.Row="5" Classes="CB" Text="{Binding CurrSettings.Repop.mutSeverity}"/>
             </Grid>
 
-            <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Classes="bb">
+            <Border Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Classes="bb">
                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="Zachowanie" FontSize="15"/>
             </Border>
 
-            <Grid Grid.Row="1" Grid.Column="4" Margin="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2.2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2.5*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Classes="Txt" Text="Zatrzymaj po:"/>
-                <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="{Binding Settings.Main.currStopMode}" Content="pokoleniach"/>
-                <RadioButton Grid.Row="2" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" Content="poprawa &lt;"/>
-                <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="{Binding Settings.Main.fullMemory}"/>
-            </Grid>
-
+            <Border Grid.Row="1" Grid.Column="4" Classes="bb">
+                <Grid  Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2.2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2.5*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Classes="Txt" Text="Zatrzymaj po:"/>
+                    <RadioButton Grid.Row="1" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" IsChecked="{Binding CurrSettings.Main.currStopMode}" Content="pokoleniach"/>
+                    <RadioButton Grid.Row="2" GroupName="stopChoiceRB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="{Binding SetFontSize}" Content="poprawa &lt;"/>
+                    <CheckBox Grid.Row="3" Classes="Check" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Run FullMemory?" IsChecked="{Binding CurrSettings.Main.fullMemory}"/>
+                </Grid>
+            </Border>
             <Grid Grid.Row="1" Grid.Column="5" Margin="1,1,1,1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2.2*"/>
@@ -470,8 +473,8 @@
                     <RowDefinition Height="3.4*"/>
                     <RowDefinition Height="3.4*"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="1" Classes="TB" Text="{Binding Settings.Main.gensToRun}"/>
-                <TextBox Grid.Row="2" Classes="TB" Text="{Binding Settings.Main.epsToStopAt}"/>
+                <TextBox Grid.Row="1" Classes="TB" Text="{Binding CurrSettings.Main.gensToRun}"/>
+                <TextBox Grid.Row="2" Classes="TB" Text="{Binding CurrSettings.Main.epsToStopAt}"/>
                 <Button Grid.Row="3" Margin="2" Content="Zapisz" Command="{Binding SaveBtn}"/>
                 <Button Grid.Row="4" Margin="2" Content="Start" Command="{Binding OnStartButtonClick}"/>
             </Grid>

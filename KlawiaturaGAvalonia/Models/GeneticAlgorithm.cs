@@ -8,10 +8,13 @@ namespace KlawiaturaGAvalonia.Models
     {
         //Piotr Ciba
 
-        public static (List<Summary>, List<Chromosom[]>) Start(Settings s, IProgress<int> progress)
+        public (List<Summary>, List<Chromosom[]>) Start(Settings s, IProgress<int> progress)
         {
             //Czacza idzie tak: Rodzice > Fitness > CarryOver > Selekcja > Crossover > Mutacja > Dzieci > "Rodzice = Dzieci" > repeat
 
+            //preparing Fitness class instance
+            Fitness Fit = new(s.FitSet);
+            
             //preparing the output variable;
             List<Summary> genSummaries = new List<Summary>();
             List<Chromosom[]> pokolenia = new List<Chromosom[]>();
@@ -27,7 +30,7 @@ namespace KlawiaturaGAvalonia.Models
             //calculating the Parents' fitness
             foreach (var p in parents)
             {
-                p.fitness = Fitness.Fn(s.FitSet,StringToLayout(p.layout));
+                p.fitness = Fit.Fn(p.layout);
             }
 
             //sorting Parents by fitness
@@ -88,7 +91,7 @@ namespace KlawiaturaGAvalonia.Models
                 foreach (var c in children)
                 {
                     if (c.fitness == 0)
-                        c.fitness = Fitness.Fn(s.FitSet,StringToLayout(c.layout));
+                        c.fitness = Fit.Fn(c.layout);
                 }
                 //sort ascending
                 children = (from c in children orderby c.fitness ascending select c).ToList();
@@ -165,14 +168,14 @@ namespace KlawiaturaGAvalonia.Models
                 new double[] { 4, 4, 3, 2, 5, 3, 2, 3, 4, 4 }
          */
         
-        public static string LayoutToString(string[][] input)
+        public string LayoutToString(string[][] input)
         {
             string output="";
             for (int i = 0; i < 3; i++)
                 output += string.Join("", input[i]);
             return output;
         }
-        public static string[][] StringToLayout(string input)
+        public string[][] StringToLayout(string input)
         {
             //QWERTYUIOP[]ASDFGHJKL;'ZXCVBNM,.?
             string[] temp = new string[3];
@@ -184,7 +187,7 @@ namespace KlawiaturaGAvalonia.Models
                 output[i] = temp[i].Select(x => new string(x, 1)).ToArray();
             return output;
         }
-        public static List<Chromosom> ScrambleParentsLayouts(List<Chromosom> input)
+        public List<Chromosom> ScrambleParentsLayouts(List<Chromosom> input)
         {
             List<Chromosom> output = input;
             int len = input.Count;

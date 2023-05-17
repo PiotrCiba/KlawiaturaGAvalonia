@@ -37,9 +37,6 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public Window? _window { get; set; }
 
     //default constructor
-    public MainWindowViewModel()
-    {
-    }
 
     //Colour fields
     public string PrimaryColour { get; set; } = "White";
@@ -80,13 +77,53 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     //Settings contents
     public int SetFontSize { get; set; } = 12;
-    public Settings Settings { get; set; } = new Settings();
+    public Settings CurrSettings { get; set; } = new ();
+    public FitnessSettings bodgeFS { get; set; } = new ();
     public string[] ChildNumbers { get; set; } = { "1", "2" };
     public string[] CarryModes { get; set; } = { "no carry", "Elityzm (%)" };
     public string[] SelectionAlgorithms { get; set; } = { "Turniej", "Ruletka", "Rank" };
     public string[] CrossoverAlgorithms { get; set; } = { "OX", "CX", "ERX", "AEX" };
     public string[] MutationAlgorithms { get; set; } = { "Pair Swap", "Partial Scramble", "Inversion Mutation" };
 
+    //local class instances
+    public Fitness evalFn { get; set; } = new ();
+    public GeneticAlgorithm GA = new();
+    
+    //Advanced fitness settings
+
+    private string _fitnessType = "Funkcja dopasowania: Podstawowa";
+
+    public string FitnessType
+    {
+        get { return _fitnessType;}
+        set
+        {
+            _fitnessType = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isOpened = false;
+
+    public bool IsAdvancedOpened
+    {
+        get { return _isOpened; }
+        set {
+            if (value)
+            {
+                FitnessType = "FunkcjaDopasowania: Zaawansowana";
+                CurrSettings.FitSet.AdvancedMode = true;
+            }
+            else
+            {
+                FitnessType = "Funkcja dopasowania: Podstawowa";
+                CurrSettings.FitSet.AdvancedMode = false;
+            }
+            _isOpened = value;
+            OnPropertyChanged();
+        }
+    }
+    
     //Results contents
     private Progress<int>? Progress { get; set; }
     private int _currentProgressValue;
@@ -117,7 +154,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    private List<Chromosom[]> _allgen = new List<Chromosom[]>();
+    private List<Chromosom[]> _allgen = new ();
 
     public List<Chromosom[]> AllGenerations
     {
@@ -132,7 +169,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    private List<Chromosom> _currgen;
+    private List<Chromosom> _currgen = new();
 
     public List<Chromosom> CurrentGeneration
     {
@@ -264,7 +301,8 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (SelectedLayout >= 0)
         {
             SelectedLayoutName = Layouts[SelectedLayout];
-            CurrentLayoutFitness = Fitness.Fn(Settings.FitSet,CurrentLayout);
+            evalFn.Update(CurrSettings.FitSet);
+            CurrentLayoutFitness = evalFn.Fn(string.Join("",CurrentLayout.SelectMany(x=>x)));
             CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
             OnPropertyChanged(nameof(CurrentLayout));
             OnPropertyChanged(nameof(SelectedLayoutName));
@@ -304,9 +342,10 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     private async Task<(List<Summary>, List<Chromosom[]>)> StartTask()
     {
+        CurrSettings.FitSet = evalFn.currentSettings;
         //calling Start method to execute GA
         return await Task.Run(() =>
-            GeneticAlgorithm.Start(Settings, Progress ?? throw new InvalidOperationException()));
+            GA.Start(CurrSettings, Progress ?? throw new InvalidOperationException()));
     }
 
     public void OnGenSelectionChanged()
@@ -324,8 +363,9 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (CurrSelChromosome >= 0)
         {
             SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
-            CurrentLayout = GeneticAlgorithm.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
-            CurrentLayoutFitness = Fitness.Fn(Settings.FitSet, CurrentLayout);
+            CurrentLayout = GA.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
+            evalFn.Update(CurrSettings.FitSet);
+            CurrentLayoutFitness = evalFn.Fn(string.Join("",CurrentLayout.SelectMany(x=>x)));
             CurrentImprovementOverQwerty = CurrentLayoutFitness / QwertyFitness;
             OnPropertyChanged(nameof(CurrentLayout));
             OnPropertyChanged(nameof(SelectedLayoutName));
@@ -388,28 +428,28 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             sw.WriteLine("\n===================================================================");
             sw.WriteLine("\n\tSETTINGS:");
             sw.WriteLine("\n1) POPULATION:");
-            sw.Write(" size: \t\t\t{0}\n children per parent: \t{1}\n", Settings.Main.popSize,Settings.Repop.childNumber+1);
+            sw.Write(" size: \t\t\t{0}\n children per parent: \t{1}\n", CurrSettings.Main.popSize,CurrSettings.Repop.childNumber+1);
             sw.WriteLine("\n2) CARRY-OVER:");
-            sw.Write(" carry-over mode: \t{0}\n carry-over ratio (%): \t{1}\n ", CarryModes[Settings.Repop.carryoverType], Settings.Repop.carryVar);
-            sw.Write("culling: \t\t{0}\n culling ratio (%): \t{1}\n",Settings.Repop.culling,Settings.Repop.cullingRate);
+            sw.Write(" carry-over mode: \t{0}\n carry-over ratio (%): \t{1}\n ", CarryModes[CurrSettings.Repop.carryoverType], CurrSettings.Repop.carryVar);
+            sw.Write("culling: \t\t{0}\n culling ratio (%): \t{1}\n",CurrSettings.Repop.culling,CurrSettings.Repop.cullingRate);
             sw.WriteLine("\n3) SELECTION, CROSSOVER:");
             sw.Write("selection algorithm: \t{0}\n selection pressure \t{1}\n crossover operator: \t{2}\n", 
-                SelectionAlgorithms[Settings.Repop.currSel], Settings.Repop.SelPressure, CrossoverAlgorithms[Settings.Repop.currX]);
+                SelectionAlgorithms[CurrSettings.Repop.currSel], CurrSettings.Repop.SelPressure, CrossoverAlgorithms[CurrSettings.Repop.currX]);
             sw.WriteLine("\n4) MUTATION:");
             sw.Write(" mutation type: \t{0}\n mutation chance: \t{1}\n mutation severity: \t{2}\n",
-                MutationAlgorithms[Settings.Repop.currMut],Settings.Repop.mutChance,Settings.Repop.mutSeverity);
+                MutationAlgorithms[CurrSettings.Repop.currMut],CurrSettings.Repop.mutChance,CurrSettings.Repop.mutSeverity);
             sw.WriteLine("\n5) BEHAVIOUR:");
-            sw.Write(" stop after {0}: \t{1}\n FullMemory: \t\t{2}\n", (Settings.Main.currStopMode)?"gen ":"eps < ",
-                (Settings.Main.currStopMode)?Settings.Main.gensToRun:Settings.Main.epsToStopAt,Settings.Main.fullMemory);
+            sw.Write(" stop after {0}: \t{1}\n FullMemory: \t\t{2}\n", (CurrSettings.Main.currStopMode)?"gen ":"eps < ",
+                (CurrSettings.Main.currStopMode)?CurrSettings.Main.gensToRun:CurrSettings.Main.epsToStopAt,CurrSettings.Main.fullMemory);
             sw.WriteLine("===================================================================");
             sw.WriteLine("\nRESULTS:");
-            sw.WriteLine("GEN\t|\tBEST\t|\tAVG"+(Settings.Main.fullMemory?"\t|\tBestExample":""));
+            sw.WriteLine("GEN\t|\tBEST\t|\tAVG"+(CurrSettings.Main.fullMemory?"\t|\tBestExample":""));
             var len = GenerationSummaries.Count;
             for (int i = 0; i < len; i++)
             {
                 sw.Write("{0}\t|\t{1}\t|\t{2}",GenerationSummaries[i].IdPokolenia,
                     Math.Round(GenerationSummaries[i].BestFitness,5),Math.Round(GenerationSummaries[i].AvgFitness,5));
-                if(Settings.Main.fullMemory)
+                if(CurrSettings.Main.fullMemory)
                     sw.Write("\t|\t"+AllGenerations[i][0].layout);
                 sw.WriteLine();
             }

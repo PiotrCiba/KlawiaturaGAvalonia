@@ -52,6 +52,19 @@
     public class FitnessSettings
     {
         //mode selection
-        public bool AdvancedMode = false;
+        public bool AdvancedMode { get; set; } = false;
+        public string[] filenames { get; set; } = { "donquichote.txt", "mobydick.txt", "pantadeusz.txt", };
+
+        public int selectedbookindex { get; set; } = 0;
+        //kryteria
+        public string[] first { get; set; } = {"brak", "naprzemiennie ręce", "ta sama ręka", "naprzemiennie palce", "ten sam palec" };
+        public int firstindex { get; set; } = 0;
+        public double firstVal { get; set; } = 0.33;
+        public string[] second { get; set; } = { "brak", "rozkład palców", "użycie rzędów", "palce + rzędy" };
+        public int secondindex { get; set; } = 0;
+        public double secondVal { get; set; } = 0.33;
+        public string[] third { get; set; } = { "brak", "odległość (km)" };
+        public int thirdindex { get; set; } = 0;
+        public double thirdVal { get; set; } = 0.33;
     }
 }
