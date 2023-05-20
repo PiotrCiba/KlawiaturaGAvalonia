@@ -157,7 +157,6 @@ public class Fitness
     private class TypingStats
     {
         private string _layout;
-        private char prevKey;
         //these are for tracking finge usage
         private string[] _fingerFields = { "1!","2@","3#","4$5%","6^7&","8*","9(","0)-_=+:\"/" };
         public int[] _fingerStats = new int[8];

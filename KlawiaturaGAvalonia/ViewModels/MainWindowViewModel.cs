@@ -71,7 +71,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     public string SelectedLayoutName { get; set; } = "QWERTY";
     public double CurrentLayoutFitness { get; set; }
-    public const double QwertyFitness = 243.5024299999992;
+    public double QwertyFitness = 243.5024299999992;
     public double CurrentImprovementOverQwerty { get; set; }
     public int EvalFontSize { get; set; } = 18;
 
@@ -300,6 +300,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
         if (SelectedLayout >= 0)
         {
+            string[][] temp = {
+                new[] { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]" },
+                new[] { "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'" },
+                new[] { "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?" }
+            };
+            QwertyFitness = evalFn.Fn(string.Join("",temp.SelectMany(x=>x)));
             SelectedLayoutName = Layouts[SelectedLayout];
             evalFn.Update(CurrSettings.FitSet);
             CurrentLayoutFitness = evalFn.Fn(string.Join("",CurrentLayout.SelectMany(x=>x)));
@@ -362,6 +368,12 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         if (CurrSelChromosome >= 0)
         {
+            string[][] temp = {
+                new[] { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]" },
+                new[] { "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'" },
+                new[] { "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?" }
+            };
+            QwertyFitness = evalFn.Fn(string.Join("",temp.SelectMany(x=>x)));
             SelectedLayoutName = "Gen " + CurrSelGeneration + ", Child " + CurrSelChromosome;
             CurrentLayout = GA.StringToLayout(CurrentGeneration[CurrSelChromosome].layout);
             evalFn.Update(CurrSettings.FitSet);

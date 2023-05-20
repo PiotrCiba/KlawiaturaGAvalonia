@@ -7,7 +7,7 @@
         x:Class="KlawiaturaGAvalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="KeyboardGAvalonia" Height="720" Width="1200"
+        Title="KeyboardGAvalonia" Height="800" Width="1200"
         Background="{Binding PrimaryColour}">
     <Window.DataContext>
         <vm:MainWindowViewModel/>

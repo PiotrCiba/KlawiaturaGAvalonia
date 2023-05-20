@@ -63,7 +63,7 @@
         public string[] second { get; set; } = { "brak", "rozkład palców", "użycie rzędów", "palce + rzędy" };
         public int secondindex { get; set; } = 0;
         public double secondVal { get; set; } = 0.33;
-        public string[] third { get; set; } = { "brak", "odległość (km)" };
+        public string[] third { get; set; } = { "brak", "odległość (m)" };
         public int thirdindex { get; set; } = 0;
         public double thirdVal { get; set; } = 0.33;
     }
