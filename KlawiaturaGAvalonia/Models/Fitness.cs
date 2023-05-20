@@ -141,7 +141,7 @@ public class Fitness
 
             if (currentSettings.thirdindex > 0)
             {
-                sum += stats.distance / 1000000 * currentSettings.thirdVal;
+                sum += stats.distance / 1000 * currentSettings.thirdVal;
             }
         }
         //zwracanie sumy
